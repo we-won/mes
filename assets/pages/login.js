@@ -45,7 +45,7 @@ var LoginValidation = function () {
 
 			            // Use Ajax to submit form data
 			            $.post($form.attr('action'), $form.serialize(), function(result) {
-			            	alert(result.message);
+			            	
 			            	// alert(result.errors);
 			            	if( result.errors == false )
 			            	{

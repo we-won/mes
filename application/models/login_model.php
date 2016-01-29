@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class login_model extends CI_Model
 {
 
-	var $eg_users = 'eg_users';
+	var $mes_users = 'mes_users';
 	var $error_no;
 	var $error_msg;
 	
@@ -22,7 +22,7 @@ class login_model extends CI_Model
 		$this->db->where('account_type', 'administrator');
 		// $this->db->or_where('account_type', 'game manager'); 
 		
-		$res = $this->db->get($this->eg_users);
+		$res = $this->db->get($this->mes_users);
 		return ($res->num_rows() > 0) ? $res->row_array() : false;
 	}	
 

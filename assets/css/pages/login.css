@@ -4,7 +4,7 @@ Login page
 
 /* logo page */
 .login {
-  background: #444 url('../../img/bg_admin.png') no-repeat center -100px !important;
+  background: #444 url('../../img/bg_admin.png') no-repeat center 0px !important;
 }
 
 .login .logo {
@@ -15,7 +15,7 @@ Login page
 }  
 
 .login .content {
-  background-color:#724a26; 
+  background-color:#D1827C; 
   width: 750px;
   margin: 0 auto; 
   margin-bottom: 0px;
@@ -31,7 +31,7 @@ Login page
 .er-logo-content{
   min-height:280px;
   display: block;
-  background-color:#724a26;
+  background-color:#D1827C;
   padding: 30px; 
   padding-top: 20px; 
   padding-bottom: 15px; 
@@ -46,7 +46,7 @@ Login page
 .er-info-content{
   min-height:295px;
   display: block;
-  background-color:#f3e1bb;
+  background-color:#FDEEA7;
   padding: 30px; 
   padding-top: 20px; 
   padding-bottom: 15px; 
@@ -95,10 +95,10 @@ Login page
 }
 
 .login .content .form-actions {
-  background-color: #f3e1bb;
+  background-color: #FDEEA7;
   clear: both;
   border: 0px;
-  border-bottom: 1px solid #f3e1bb;
+  border-bottom: 1px solid #FDEEA7;
   padding: 0px 30px 25px 30px;
   margin-left: -30px;
   margin-right: -30px;
@@ -184,7 +184,7 @@ Login page
   text-align: center;
   margin: 0 auto; 
   padding: 10px;
-  color: #724a26;
+  color: #FDEEA7;
   font-size: 11px;
 }
 

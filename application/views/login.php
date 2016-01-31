@@ -3,7 +3,7 @@
 <div class="col-sm-6 er-logo-content">
 	<img src="<?php echo asset_url() ?>img/logo-lg.png" alt=""/>
 	<img src="<?php echo asset_url() ?>img/logo-text.png" alt=""/>
-	<h4 class="form-title">Game world manager</h4>
+	<h4 class="form-title">Enrollment System</h4>
 </div>
 
 <div class="col-sm-6 er-info-content">

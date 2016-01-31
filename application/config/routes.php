@@ -45,8 +45,6 @@ $route['404_override'] = '';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
 
-/************************************
-		AUTHENTICATION
-*************************************/
-
 $route['login'] = "login_controller/login";
+$route['logout'] = "login_controller/logout";
+$route['dashboard'] = "dashboard_controller";

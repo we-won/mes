@@ -13,7 +13,10 @@ class dashboard_controller extends CI_Controller {
 	public function index()
 	{	
 
-		$data = [ 'title' => 'Dashboard' ];
+		$data = [ 
+			'title' => 'Dashboard',
+			'account_type' => $this->nativesession->get('account_type') 
+		];
 
 		$this->template
 			->set_partial('more_css', 'scripts/dashboard_css')

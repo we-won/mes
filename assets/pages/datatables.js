@@ -1,5 +1,5 @@
 var TableAjax = function () {
-
+    alert('test');
     return {
 
         //main function to initiate the module

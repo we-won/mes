@@ -80,7 +80,7 @@ class users_controller extends CI_Controller {
 		}
 
 		$data = [ 
-			'title' => ' <small>New User</small>'
+			'title' => 'New User'
 		];
 
 		$this->template
@@ -117,7 +117,7 @@ class users_controller extends CI_Controller {
 		}
 
 		$data = [ 
-			'title' => ' <small>Update User</small>',
+			'title' => 'Update User',
 			'user'	=> $this->users_model->get_user($id)
 		];
 
@@ -136,7 +136,7 @@ class users_controller extends CI_Controller {
 		}
 		else
 		{
-			$this->nativesession->set_flashdata( '_building_levels', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">Cannot remove record.</div>' );	
 		}
 		
 		redirect(base_url( $this->uri->segment(1)));

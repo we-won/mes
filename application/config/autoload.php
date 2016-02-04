@@ -71,7 +71,8 @@ $autoload['libraries'] = array(
 
 $autoload['helper'] = array(
 		'url',
-		'utility_helper'
+		'utility_helper',
+		'constants_helper'
 	);
 
 

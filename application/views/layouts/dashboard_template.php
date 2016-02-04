@@ -33,7 +33,8 @@
 <link href="<?php echo asset_url() ?>css/themes/brown.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="<?php echo asset_url() ?>css/custom.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<link rel="shortcut icon" href="<?php echo asset_img() ?>/favicon.ico">
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->

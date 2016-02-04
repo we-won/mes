@@ -2,7 +2,7 @@
 <div class="portlet box grey ">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-reorder"></i><?php echo $title; ?>
+			<i class="fa fa-reorder"></i><small><?php echo $title; ?></small>
 		</div>
 	</div>
 	<div class="portlet-body form">
@@ -54,9 +54,9 @@
 								<div class="col-sm-8">
 									<select class="form-control" name="user[account_type]" id="account_type">
 										<?php $val = isset( $user ) ? $user['account_type'] : ''; ?>
-										<option value="administrator" <?php echo ( $val == 'administrator' ) ? 'selected' : '' ?> >Administrator</option>
-										<option value="registrar" <?php echo ( $val == 'registrar' ) ? 'selected' : '' ?> >Registrar</option>
-										<option value="cashier" <?php echo ( $val == 'cashier' ) ? 'selected' : '' ?> >Cashier</option>
+										<option value="administrator" <?php echo ( $val == ADMIN ) ? 'selected' : '' ?> >Administrator</option>
+										<option value="registrar" <?php echo ( $val == REGISTRAR ) ? 'selected' : '' ?> >Registrar</option>
+										<option value="cashier" <?php echo ( $val == CASHIER ) ? 'selected' : '' ?> >Cashier</option>
 									</select>
 								</div>
 							</div>

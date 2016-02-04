@@ -53,3 +53,13 @@ $route['users'] = "users_controller";
 $route['users/new'] = "users_controller/new_user";
 $route['users/(:num)/edit'] 	= "users_controller/edit_user/$1";
 $route['users/(:num)/delete'] 	= "users_controller/delete_user/$1";
+
+$route['courses'] = "courses_controller";
+$route['courses/new'] = "courses_controller/new_course";
+$route['courses/(:num)/edit'] 	= "courses_controller/edit_course/$1";
+$route['courses/(:num)/delete'] 	= "courses_controller/delete_course/$1";
+
+$route['subjects'] = "subjects_controller";
+$route['subjects/new'] = "subjects_controller/new_subject";
+$route['subjects/(:num)/edit'] 	= "subjects_controller/edit_subject/$1";
+$route['subjects/(:num)/delete'] 	= "subjects_controller/delete_subject/$1";

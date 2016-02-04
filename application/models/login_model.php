@@ -19,7 +19,7 @@ class login_model extends CI_Model
 	{		
 		
 		$this->db->where('username', $username);	
-		$this->db->where('account_type', 'administrator');
+		$this->db->where_in('account_type', ['administrator', 'registrar', 'cashier']);
 		// $this->db->or_where('account_type', 'game manager'); 
 		
 		$res = $this->db->get($this->mes_users);

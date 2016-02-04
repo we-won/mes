@@ -8,7 +8,7 @@
 	<div class="portlet-body form">
 		<br>
 		<div class="col-sm-12">
-			<?php echo $this->nativesession->flashdata( '_user' ); ?>
+			<?php echo $this->nativesession->flashdata( '_users' ); ?>
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 		</div>
 
@@ -72,7 +72,7 @@
 
 			<div class="form-actions">
 				<div class="pull-right">
-					<button type="button" class="btn default" onclick="history.go(-1);">Cancel</button>
+					<button type="button" class="btn default" onclick="window.location.href='<?php echo base_url( $this->uri->segment(1) ) ?>'">Cancel</button>
 					<button type="submit" class="btn red">Submit</button>
 				</div>
 				

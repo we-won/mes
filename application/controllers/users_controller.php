@@ -51,10 +51,6 @@ class users_controller extends CI_Controller {
 	 	] );
 	}
 
-	public function test() {
-		print_r($this->users_model->get_users());
-	}
-
 	public function new_user()
 	{	
 		$this->load->helper( array('form', 'url') );
@@ -70,13 +66,14 @@ class users_controller extends CI_Controller {
 				
 				$data = $_POST[ 'user' ];
 
-				if($this->users_model->create_user($data)) {
+				$result = $this->users_model->create_user($data);
+				if($result[0]) {
 					
-					$this->nativesession->set_flashdata( '_user', '<div class="alert alert-success">user has been added.</div>' );	
-					redirect( base_url( $this->uri->segment(1) ) );
+					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">' . $result[1] . '</div>' );
+					redirect(base_url($this->uri->segment(1)));	
 				} else {
 
-					$this->nativesession->set_flashdata( '_user', '<div class="alert alert-danger">Unable to add user, please try again.</div>' );	
+					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
 				}
 			}
 
@@ -92,7 +89,7 @@ class users_controller extends CI_Controller {
 			->build('users/user_form', $data );
 	}
 
-	public function edit($id = 0)
+	public function edit_user( $id = 0 )
 	{	
 		$this->load->helper( array('form', 'url') );
 		$this->load->library( 'form_validation' );
@@ -107,19 +104,17 @@ class users_controller extends CI_Controller {
 				
 				$data = $_POST[ 'user' ];
 
-				if($this->users_model->create_user($data)) {
+				if($this->users_model->update_user($id, $data)) {
 					
-					$this->nativesession->set_flashdata( '_user', '<div class="alert alert-success">user has been added.</div>' );	
-					redirect( base_url( $this->uri->segment(1) ) );
+					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">User has been updated.</div>' );
+					redirect(base_url( $this->uri->segment(1)));
 				} else {
 
-					$this->nativesession->set_flashdata( '_user', '<div class="alert alert-danger">Unable to add user, please try again.</div>' );	
+					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">Unable to update user, please try again.</div>' );	
 				}
 			}
 
 		}
-
-
 
 		$data = [ 
 			'title' => ' <small>Update User</small>',
@@ -130,6 +125,21 @@ class users_controller extends CI_Controller {
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
 			->build('users/user_form', $data );
+	}
+
+	public function delete_user( $id = 0 )
+	{	
+		if( $id > 0 )
+		{
+			$this->users_model->delete_user( $id );
+			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">User has been removed.</div>' );	
+		}
+		else
+		{
+			$this->nativesession->set_flashdata( '_building_levels', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+		}
+		
+		redirect(base_url( $this->uri->segment(1)));
 	}
 
 }

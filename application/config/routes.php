@@ -51,4 +51,5 @@ $route['dashboard'] = "dashboard_controller";
 
 $route['users'] = "users_controller";
 $route['users/new'] = "users_controller/new_user";
-$route['users/(:num)/edit'] 	= "users_controller/edit/$1";
+$route['users/(:num)/edit'] 	= "users_controller/edit_user/$1";
+$route['users/(:num)/delete'] 	= "users_controller/delete_user/$1";

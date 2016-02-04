@@ -8,13 +8,6 @@ class login_controller extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function test()
-	{
-		$this->load->model( 'login_model' );
-		$potential_user = $this->login_model->get_user_existing_data( 'erectus' );
-		print_r($potential_user);
-	}
-
 	public function login() 
 	{
 		$this->load->helper( array( 'form', 'url' ) );
@@ -86,7 +79,7 @@ class login_controller extends CI_Controller {
 						$res = [ 'errors' => false, 'message' => 'Invalid password!' ];
 					}
 				}else{
-						$res = [ 'errors' => false, 'message' => 'login failed!' ];
+						$res = [ 'errors' => false, 'message' => 'Login failed!' ];
 				}
 
 	

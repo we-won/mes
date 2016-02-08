@@ -6,18 +6,18 @@
 	</a>
 </li>
 
-<li class="<?php echo ($this->uri->segment(1) == 'courses' ? 'start active ' : '' ) ?>">
-	<a href="<?php echo base_url( '/courses') ?>">
-		<i class="fa fa-graduation-cap"></i>
-		<span class="title">Courses</span>
-		<span class="selected"></span>
-	</a>
-</li>
-
 <li class="<?php echo ($this->uri->segment(1) == 'subjects' ? 'start active ' : '' ) ?>">
 	<a href="<?php echo base_url( '/subjects') ?>">
 		<i class="fa fa-book"></i>
 		<span class="title">Subjects</span>
+		<span class="selected"></span>
+	</a>
+</li>
+
+<li class="<?php echo ($this->uri->segment(1) == 'courses' ? 'start active ' : '' ) ?>">
+	<a href="<?php echo base_url( '/courses') ?>">
+		<i class="fa fa-graduation-cap"></i>
+		<span class="title">Courses</span>
 		<span class="selected"></span>
 	</a>
 </li>

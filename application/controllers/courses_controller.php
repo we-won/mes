@@ -83,7 +83,10 @@ class courses_controller extends CI_Controller {
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/course_form_css')
+			->set_partial('more_js', 'scripts/course_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
+			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
 			->build('courses/course_form', $data );
 	}
@@ -120,7 +123,10 @@ class courses_controller extends CI_Controller {
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/course_form_css')
+			->set_partial('more_js', 'scripts/course_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
+			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
 			->build('courses/course_form', $data);
 	}
@@ -140,4 +146,56 @@ class courses_controller extends CI_Controller {
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
+	public function curriculum_listing($course_id = 0)
+	{	
+		$this->load->library('Datatables');
+		
+		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
+
+		echo $this->datatables->make( [
+	 		'model_loc' 		=> 'courses_model',
+	 		'model' 			=> 'courses_model',
+	 		'func_get'			=> 'get_curriculum_list',
+	 		'func_get_max'		=> 'get_max_curriculum_list',
+	 		'where'				=> [ 'course_id' => $course_id ],
+	 		'search' 			=> $search,
+	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
+	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
+	 		'sEcho'				=> $_GET['sEcho']
+	 	], [ 
+	 		'year',
+	 		'semester',
+	 		'total_subjects',
+	 		'total_units',
+	 		'@view:courses/datatables/curriculum_list_action'
+	 	] );
+	}
+
+	public function edit_curriculum()
+	{
+		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course']))) return false;
+
+		$course = $_POST['course'];
+		$year = $_POST['year'];
+		$sem = $_POST['sem'];
+
+		$data['year'] = $year;
+		$data['sem'] = $sem;
+
+		$data['subjects'] = $this->courses_model->get_curriculum($course, $year, $sem);
+
+		echo $this->load->view('modals/curriculum_edit_modal_data', compact('data'), TRUE);
+	}
+
+	public function save_curriculum()
+	{
+		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course'])) || !(isset($_POST['subjects']))) return false;
+
+		$course = $_POST['course'];
+		$year = $_POST['year'];
+		$sem = $_POST['sem'];
+		$subjects = $_POST['subjects'];
+
+		echo $this->courses_model->save_curriculum($course, $year, $sem, $subjects);
+	}
 }

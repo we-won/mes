@@ -13,7 +13,7 @@
 		<div class="tab-pane">
 			<div class="table-toolbar">
 				<div class="btn-group">
-					<a href="<?php echo base_url( 'subjects/new' ) ?>" class="btn orange">
+					<a href="<?php echo base_url( 'subjects/new' ) ?>" class="btn orange open-subject-form">
 					Add New <i class="fa fa-plus"></i>
 					</a>
 				</div>

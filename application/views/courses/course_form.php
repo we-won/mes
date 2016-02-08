@@ -47,10 +47,43 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for=""> </label>
+								
+							</div>
+						</div>
 						
 					</div>
 
+					<?php if (isset($course)) : ?>			
 					<div class="clearfix"></div>
+					<br/><br/>
+
+					<div class="col-sm-9">
+						<h4 class="form-section">Curriculum <a href="<?php echo base_url( 'courses/new' ) ?>" class="btn orange">View Full Curriculum  <i class="fa fa-file-text"></i></a>
+							
+						</h4>
+
+						<div class="col-sm-12">
+							<table class="table table-striped table-bordered table-advance table-hover" id="tbl_curriculum" data-source="<?php echo base_url( 'courses_controller/curriculum_listing/' . (isset($course) ? $course['id'] : '0')) ?>"> 
+								<thead>
+									<tr>
+										<th>Year</th>
+										<th>Semester</th>
+										<th>Subjects</th>
+										<th>Total Units</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+					<?php endif; ?>
 
 				</div>
 

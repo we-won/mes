@@ -204,6 +204,10 @@
 		</span>
 	</div>
 </div>
+
+<!-- MODAL -->
+<?php echo ( isset( $template['partials']['curriculum_edit_modal'] ) ? $template['partials']['curriculum_edit_modal'] : '' ); ?>
+
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
@@ -223,7 +227,8 @@
 
 <script src="<?php echo asset_url() ?>plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 
-
+<link href="<?php echo asset_plugins() ?>bootstrap-duallistbox/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo asset_plugins() ?>bootstrap-duallistbox/js/jquery.bootstrap.js" type="text/javascript"/></script>
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?php echo asset_url() ?>scripts/app.js"></script>
 

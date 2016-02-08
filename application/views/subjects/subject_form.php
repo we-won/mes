@@ -65,33 +65,7 @@
 								</div>
 							</div>
 						</div>
-						
-					</div>
 
-			
-					<div class="clearfix"></div>
-					<br/><br/>
-					<div class="col-sm-9">
-						<h4 class="form-section">Recommended Courses</h4>
-
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Code</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="subject[code]" value="<?php echo isset($subject) ? $subject['code'] : ''; ?>">
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Title</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="subject[title]" value="<?php echo isset($subject) ? $subject['title'] : ''; ?>"> 
-								</div>
-							</div>
-						</div>
-						
 					</div>
 
 				</div>

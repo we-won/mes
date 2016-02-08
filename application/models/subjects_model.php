@@ -51,7 +51,6 @@ class subjects_model extends CI_Model
 		
 		$return = $q->row_array()['count'];
 		return $return;
-
 	}
 
 	public function create_subject( $data )
@@ -83,5 +82,5 @@ class subjects_model extends CI_Model
 
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
-
+	
 }

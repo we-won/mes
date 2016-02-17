@@ -38,6 +38,7 @@
 							include 'admin_sidebar.php'; 
 							break;
 						case REGISTRAR:
+							include 'registrar_sidebar.php'; 
 							break;
 						case CASHIER:
 							break;

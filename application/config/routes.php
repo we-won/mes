@@ -63,3 +63,8 @@ $route['subjects'] = "subjects_controller";
 $route['subjects/new'] = "subjects_controller/new_subject";
 $route['subjects/(:num)/edit'] 	= "subjects_controller/edit_subject/$1";
 $route['subjects/(:num)/delete'] 	= "subjects_controller/delete_subject/$1";
+
+$route['students'] = "students_controller";
+$route['students/new'] = "students_controller/new_student";
+$route['students/(:num)/edit'] 	= "students_controller/edit_student/$1";
+$route['students/(:num)/delete'] 	= "students_controller/delete_student/$1";

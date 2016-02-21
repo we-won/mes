@@ -36,6 +36,7 @@ class users_model extends CI_Model
 			FROM $this->mes_users
 			WHERE username LIKE '%$search%'
 			AND id <> 1
+			AND is_active <> 0
 			LIMIT $start, $limit
 		");
 		
@@ -48,6 +49,7 @@ class users_model extends CI_Model
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_users
 			WHERE id <> 1
+			AND is_active <> 0
 		");
 		
 		$return = $q->row_array()['count'];
@@ -80,9 +82,11 @@ class users_model extends CI_Model
 
 	public function delete_user( $id )
 	{
-		$this->db->where('id', $id);
-		$this->db->delete( $this->mes_users );
 		
+		$this->db->where( 'id', $id );
+		$this->db->set('is_active', 0);
+		$this->db->update( $this->mes_users, $data ); 
+
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 

@@ -43,10 +43,10 @@ class students_controller extends CI_Controller {
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
-	 		'username',
-	 		'name',
-	 		'account_type',
-	 		'created',
+	 		'number',
+	 		'firstname',
+	 		'middlename',
+	 		'lastname',
 	 		'@view:students/datatables/action'
 	 	] );
 	}
@@ -57,10 +57,10 @@ class students_controller extends CI_Controller {
 		$this->load->library( 'form_validation' );
 
 		if (isset($_POST[ 'student' ])) {
-			$this->form_validation->set_rules('student[username]', 'Username', 'required');
+			$this->form_validation->set_rules('student[number]', 'Student Number', 'required');
 			$this->form_validation->set_rules('student[firstname]', 'First Name', 'required');
+			$this->form_validation->set_rules('student[middlename]', 'Middle Name', 'required');
 			$this->form_validation->set_rules('student[lastname]', 'Last Name', 'required');
-			$this->form_validation->set_rules('student[account_type]', 'Role', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
@@ -95,10 +95,10 @@ class students_controller extends CI_Controller {
 		$this->load->library( 'form_validation' );
 
 		if (isset($_POST[ 'student' ])) {
-			$this->form_validation->set_rules('student[username]', 'Username', 'required');
+			$this->form_validation->set_rules('student[number]', 'Student Number', 'required');
 			$this->form_validation->set_rules('student[firstname]', 'First Name', 'required');
+			$this->form_validation->set_rules('student[middlename]', 'Middle Name', 'required');
 			$this->form_validation->set_rules('student[lastname]', 'Last Name', 'required');
-			$this->form_validation->set_rules('student[account_type]', 'Role', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				

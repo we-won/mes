@@ -32,10 +32,10 @@ class students_model extends CI_Model
 	public function get_students( $start = 0, $limit = 10, $search = null, $where = null )
 	{
 		$q = $this->db->query("
-			SELECT id, username, CONCAT_WS(', ', lastname, firstname) as name, account_type, created
+			SELECT id, number, firstname, middlename, lastname, created
 			FROM $this->mes_students
-			WHERE username LIKE '%$search%'
-			AND id <> 1
+			WHERE (number LIKE '%$search%' OR firstname LIKE '%$search%' OR middlename LIKE '%$search%' OR lastname LIKE '%$search%')
+			AND is_active <> 0
 			LIMIT $start, $limit
 		");
 		
@@ -47,7 +47,7 @@ class students_model extends CI_Model
 	{
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_students
-			WHERE id <> 1
+			WHERE is_active <> 0
 		");
 		
 		$return = $q->row_array()['count'];
@@ -57,7 +57,6 @@ class students_model extends CI_Model
 
 	public function create_student( $data )
 	{
-		$data['password'] = 'sha512:1000:dl4/Ltr1V2K8O2urBQMPsA8KJACMv312:wcIsUnHOce7IKFDufO30zuj6rP85u64o';
 		$data['created'] = date("Y-m-d H:i:s");
 
 		$this->db->insert( $this->mes_students, $data ); 
@@ -80,9 +79,10 @@ class students_model extends CI_Model
 
 	public function delete_student( $id )
 	{
-		$this->db->where('id', $id);
-		$this->db->delete( $this->mes_students );
-		
+		$this->db->where( 'id', $id );
+		$this->db->set( 'is_active', 0 );
+		$this->db->update( $this->mes_students, $data ); 
+
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 

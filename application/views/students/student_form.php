@@ -12,20 +12,20 @@
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 		</div>
 
-		<form id="frmuser" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
+		<form id="frmstudent" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
 			<div class="form-body">
 
 
 				<div class="row">
 
 					<div class="col-sm-9">
-						<h4 class="form-section">User Information</h4>
+						<h4 class="form-section">Student Information</h4>
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Username</label>
+								<label class="control-label col-sm-2" for="">Student Number</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="user[username]" value="<?php echo isset($user) ? $user['username'] : ''; ?>">
+									<input type="text" class="form-control" name="student[number]" value="<?php echo isset($student) ? $student['number'] : ''; ?>">
 								</div>
 							</div>
 						</div>
@@ -34,7 +34,16 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">First Name</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="user[firstname]" value="<?php echo isset($user) ? $user['firstname'] : ''; ?>"> 
+									<input type="text" class="form-control" name="student[firstname]" value="<?php echo isset($student) ? $student['firstname'] : ''; ?>"> 
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Middle Name</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="student[middlename]" value="<?php echo isset($student) ? $student['middlename'] : ''; ?>"> 
 								</div>
 							</div>
 						</div>
@@ -43,21 +52,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Last Name</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="user[lastname]" value="<?php echo isset($user) ? $user['lastname'] : ''; ?>"> 
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="control-label col-sm-4" for="">Role</label>
-								<div class="col-sm-8">
-									<select class="form-control" name="user[account_type]" id="account_type">
-										<?php $val = isset( $user ) ? $user['account_type'] : ''; ?>
-										<option value="administrator" <?php echo ( $val == ADMIN ) ? 'selected' : '' ?> >Administrator</option>
-										<option value="registrar" <?php echo ( $val == REGISTRAR ) ? 'selected' : '' ?> >Registrar</option>
-										<option value="cashier" <?php echo ( $val == CASHIER ) ? 'selected' : '' ?> >Cashier</option>
-									</select>
+									<input type="text" class="form-control" name="student[lastname]" value="<?php echo isset($student) ? $student['lastname'] : ''; ?>"> 
 								</div>
 							</div>
 						</div>

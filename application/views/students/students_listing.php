@@ -22,10 +22,10 @@
 			<table class="table table-striped table-bordered table-advance table-hover" id="tbl_students" data-source="<?php echo base_url( 'students_controller/listings') ?>"> 
 				<thead>
 					<tr>
-						<th>Userame</th>
-						<th>Name</th>
-						<th>Role</th>
-						<th>Date added</th>
+						<th>Number</th>
+						<th>Firstname</th>
+						<th>Middlename</th>
+						<th>Lastname</th>
 						<th>Actions</th>
 					</tr>
 				</thead>

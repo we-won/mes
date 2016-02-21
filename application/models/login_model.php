@@ -18,7 +18,8 @@ class login_model extends CI_Model
 	public function get_user_existing_data( $username )
 	{		
 		
-		$this->db->where('username', $username);	
+		$this->db->where('username', $username);
+		$this->db->where('is_active', 1);
 		$this->db->where_in('account_type', [ADMIN, REGISTRAR, CASHIER]);
 		// $this->db->or_where('account_type', 'game manager'); 
 		

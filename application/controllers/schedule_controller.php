@@ -7,7 +7,7 @@ class schedule_controller extends CI_Controller {
 		# code...
 		parent::__construct();
 
-		$this->load->model(['users_model']);
+		$this->load->model(['schedule_model']);
 	}
 
 
@@ -19,11 +19,11 @@ class schedule_controller extends CI_Controller {
 		];
 
 		$this->template
-			->set_partial('more_css', 'scripts/users_css')
-			->set_partial('more_js', 'scripts/users_js')
+			->set_partial('more_css', 'scripts/schedule_css')
+			->set_partial('more_js', 'scripts/schedule_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
-			->build('users/users_listing', $data );
+			->build('schedule/schedule_listing', $data );
 	}
 
 	public function listings()
@@ -33,110 +33,109 @@ class schedule_controller extends CI_Controller {
 		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
 
 		echo $this->datatables->make( [
-	 		'model_loc' 		=> 'users_model',
-	 		'model' 			=> 'users_model',
-	 		'func_get'			=> 'get_users',
-	 		'func_get_max'		=> 'get_max_user_pages',
+	 		'model_loc' 		=> 'schedule_model',
+	 		'model' 			=> 'schedule_model',
+	 		'func_get'			=> 'get_schedule_list',
+	 		'func_get_max'		=> 'get_max_schedule_pages',
 	 		'where'				=> '',
 	 		'search' 			=> $search,
 	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
-	 		'username',
-	 		'name',
-	 		'account_type',
+	 		'subject_name',
+	 		'days',
+	 		'time',
 	 		'created',
-	 		'@view:users/datatables/action'
+	 		'@view:schedule/datatables/action'
 	 	] );
 	}
 
-	public function new_user()
+	public function new_schedule()
 	{	
 		$this->load->helper( array('form', 'url') );
 		$this->load->library( 'form_validation' );
 
-		if (isset($_POST[ 'user' ])) {
-			$this->form_validation->set_rules('user[username]', 'Username', 'required');
-			$this->form_validation->set_rules('user[firstname]', 'First Name', 'required');
-			$this->form_validation->set_rules('user[lastname]', 'Last Name', 'required');
-			$this->form_validation->set_rules('user[account_type]', 'Role', 'required');
+		if (isset($_POST[ 'schedule' ])) {
+			$this->form_validation->set_rules('schedule[subject_id]', 'Subject', 'required');
+			$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
+			$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
+			
 			
 			if ($this->form_validation->run() != FALSE) {
 				
-				$data = $_POST[ 'user' ];
+				$data = $_POST[ 'schedule' ];
 
-				$result = $this->users_model->create_user($data);
+				$result = $this->schedule_model->create_schedule($data);
 				if($result[0]) {
 					
-					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">' . $result[1] . '</div>' );
+					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-success">' . $result[1] . '</div>' );
 					redirect(base_url($this->uri->segment(1)));	
 				} else {
 
-					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
+					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
 				}
 			}
 
 		}
 
 		$data = [ 
-			'title' => 'New User'
+			'title' => 'New Schedule'
 		];
 
 		$this->template
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
-			->build('users/user_form', $data );
+			->build('schedule/schedule_form', $data );
 	}
 
-	public function edit_user( $id = 0 )
+	public function edit_schedule( $id = 0 )
 	{	
 		$this->load->helper( array('form', 'url') );
 		$this->load->library( 'form_validation' );
 
-		if (isset($_POST[ 'user' ])) {
-			$this->form_validation->set_rules('user[username]', 'Username', 'required');
-			$this->form_validation->set_rules('user[firstname]', 'First Name', 'required');
-			$this->form_validation->set_rules('user[lastname]', 'Last Name', 'required');
-			$this->form_validation->set_rules('user[account_type]', 'Role', 'required');
+		if (isset($_POST[ 'schedule' ])) {
+			$this->form_validation->set_rules('schedule[subject_id]', 'Subject', 'required');
+			$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
+			$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
-				$data = $_POST[ 'user' ];
+				$data = $_POST[ 'schedule' ];
 
-				if($this->users_model->update_user($id, $data)) {
+				if($this->schedule_model->update_schedule($id, $data)) {
 					
-					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">User has been updated.</div>' );
+					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-success">Schedule has been updated.</div>' );
 					redirect(base_url( $this->uri->segment(1)));
 				} else {
 
-					$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">Unable to update user, please try again.</div>' );	
+					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-danger">Unable to update schedule, please try again.</div>' );	
 				}
 			}
 
 		}
 
 		$data = [ 
-			'title' => 'Update User',
-			'user'	=> $this->users_model->get_user($id)
+			'title' => 'Update Schedule',
+			'schedule'	=> $this->schedule_model->get_schedule($id)
 		];
 
 		$this->template
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
-			->build('users/user_form', $data );
+			->build('schedule/schedule_form', $data );
 	}
 
-	public function delete_user( $id = 0 )
+	public function delete_schedule( $id = 0 )
 	{	
 		if( $id > 0 )
 		{
-			$this->users_model->delete_user( $id );
-			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">User has been removed.</div>' );	
+			$this->schedule_model->delete_schedule( $id );
+			$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-success">Schedule has been removed.</div>' );	
 		}
 		else
 		{
-			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+			$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-danger">Cannot remove record.</div>' );	
 		}
 		
 		redirect(base_url( $this->uri->segment(1)));

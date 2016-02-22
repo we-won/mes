@@ -76,6 +76,6 @@ $route['schoolyear/(:num)/delete'] = "schoolyear_controller/delete_schoolyear/$1
 $route['schoolyear/(:num)/update_stat'] = "schoolyear_controller/update_stat_schoolyear/$1";
 
 $route['schedule'] = "schedule_controller";
-$route['schedule/new'] = "schedule_controller/new_user";
-$route['schedule/(:num)/edit'] = "schedule_controller/edit_user/$1";
-$route['schedule/(:num)/delete'] = "schedule_controller/delete_user/$1";
+$route['schedule/new'] = "schedule_controller/new_schedule";
+$route['schedule/(:num)/edit'] = "schedule_controller/edit_schedule/$1";
+$route['schedule/(:num)/delete'] = "schedule_controller/delete_schedule/$1";

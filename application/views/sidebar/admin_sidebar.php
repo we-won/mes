@@ -22,18 +22,16 @@
 	</a>
 </li>
 
-<li class="<?php echo ($this->uri->segment(1) == 'schedules' ? 'start active ' : '' ) ?>">
-	<a href="<?php echo base_url( '/schedules') ?>">
-		<i class="fa fa-calendar-plus-o"></i>
-		<span class="title">Class schedules</span>
-		<span class="selected"></span>
+<li class="<?php echo ( $this->uri->segment(1) == 'schoolyear' ? 'active ' : '' ) ?>">
+	<a href="javascript:;"><i class="fa fa-building"></i><span class="title">Management</span>
+		<?php if( $this->uri->segment(1) == 'schoolyear' ) : ?>
+		<span class="selected">	</span>
+		<?php endif; ?>
+		<span class="arrow <?php echo ( $this->uri->segment(1) == 'management' ? 'open ' : '' ) ?>"></span>
 	</a>
-</li>
-
-<li class="<?php echo ($this->uri->segment(1) == 'management' ? 'start active ' : '' ) ?>">
-	<a href="<?php echo base_url( '/management') ?>">
-		<i class="fa fa-database"></i>
-		<span class="title">Management</span>
-		<span class="selected"></span>
-	</a>
+	<ul class="sub-menu">
+		<li class="<?php echo ( ($this->uri->segment(1) == 'schoolyear') ? 'active ' : '' ) ?>">
+			<a href="<?php echo base_url('/schoolyear') ?>">School Year</a>
+		</li>
+	</ul>
 </li>

@@ -51,20 +51,31 @@ $route['dashboard'] = "dashboard_controller";
 
 $route['users'] = "users_controller";
 $route['users/new'] = "users_controller/new_user";
-$route['users/(:num)/edit'] 	= "users_controller/edit_user/$1";
-$route['users/(:num)/delete'] 	= "users_controller/delete_user/$1";
+$route['users/(:num)/edit'] = "users_controller/edit_user/$1";
+$route['users/(:num)/delete'] = "users_controller/delete_user/$1";
 
 $route['courses'] = "courses_controller";
 $route['courses/new'] = "courses_controller/new_course";
-$route['courses/(:num)/edit'] 	= "courses_controller/edit_course/$1";
-$route['courses/(:num)/delete'] 	= "courses_controller/delete_course/$1";
+$route['courses/(:num)/edit'] = "courses_controller/edit_course/$1";
+$route['courses/(:num)/delete'] = "courses_controller/delete_course/$1";
 
 $route['subjects'] = "subjects_controller";
 $route['subjects/new'] = "subjects_controller/new_subject";
-$route['subjects/(:num)/edit'] 	= "subjects_controller/edit_subject/$1";
-$route['subjects/(:num)/delete'] 	= "subjects_controller/delete_subject/$1";
+$route['subjects/(:num)/edit'] = "subjects_controller/edit_subject/$1";
+$route['subjects/(:num)/delete'] = "subjects_controller/delete_subject/$1";
 
 $route['students'] = "students_controller";
 $route['students/new'] = "students_controller/new_student";
-$route['students/(:num)/edit'] 	= "students_controller/edit_student/$1";
-$route['students/(:num)/delete'] 	= "students_controller/delete_student/$1";
+$route['students/(:num)/edit'] = "students_controller/edit_student/$1";
+$route['students/(:num)/delete'] = "students_controller/delete_student/$1";
+
+$route['schoolyear'] = "schoolyear_controller";
+$route['schoolyear/new'] = "schoolyear_controller/new_schoolyear";
+$route['schoolyear/(:num)/edit'] = "schoolyear_controller/edit_schoolyear/$1";
+$route['schoolyear/(:num)/delete'] = "schoolyear_controller/delete_schoolyear/$1";
+$route['schoolyear/(:num)/update_stat'] = "schoolyear_controller/update_stat_schoolyear/$1";
+
+$route['schedule'] = "schedule_controller";
+$route['schedule/new'] = "schedule_controller/new_user";
+$route['schedule/(:num)/edit'] = "schedule_controller/edit_user/$1";
+$route['schedule/(:num)/delete'] = "schedule_controller/delete_user/$1";

@@ -229,6 +229,10 @@
 
 <link href="<?php echo asset_plugins() ?>bootstrap-duallistbox/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo asset_plugins() ?>bootstrap-duallistbox/js/jquery.bootstrap.js" type="text/javascript"/></script>
+
+<link href="<?php echo asset_plugins() ?>select2/select2.min.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo asset_plugins() ?>select2/select2.min.js" type="text/javascript"/></script>
+
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?php echo asset_url() ?>scripts/app.js"></script>
 

@@ -13,5 +13,6 @@
 
 		subjects = new Subjects();
 		subjects.init_listing();
+        subjects.init_subject_select2(3);
 	});
 </script>

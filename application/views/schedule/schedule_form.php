@@ -11,15 +11,13 @@
 			<?php echo $this->nativesession->flashdata( '_schedule' ); ?>
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 		</div>
-
+		
 		<form id="frmschedule" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
 			<div class="form-body">
-
-
 				<div class="row">
 
-					<div class="col-sm-9">
-						<h4 class="form-section">Schedule Information</h4>
+					<div class="col-sm-8">
+						<h4 class="form-section">Schedule Form</h4>
 
 						<div class="col-sm-12">
 							<div class="form-group">
@@ -32,22 +30,115 @@
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Days</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="schedule[days]" value="<?php echo isset($schedule) ? $schedule['days'] : ''; ?>"> 
+								<label class="control-label col-sm-2" for="">Monday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
 								</div>
 							</div>
 						</div>
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Time</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="schedule[time]" value="<?php echo isset($schedule) ? $schedule['time'] : ''; ?>"> 
+								<label class="control-label col-sm-2" for="">Tuesday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
 								</div>
 							</div>
 						</div>
 						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Wednesday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Thursday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Friday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Saturday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Sunday</label>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+								</div>
+								<div class="col-sm-2">
+									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div class="clearfix"></div>

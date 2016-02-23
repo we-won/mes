@@ -59,12 +59,22 @@
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Prerequisite</label>
+								<label class="control-label col-sm-2" for="">Prerequisites</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="subject[prerequisite]" value="<?php echo isset($subject) ? $subject['prerequisite'] : ''; ?>"> 
+									<select class="erSubjects form-control" id="selected_subjects" multiple="multiple">
+										<?php $values = ""; if (isset($prerequisites)) : ?>
+											<?php foreach($prerequisites as $prerequisite) : ?>
+												<?php $values .= $prerequisite['prerequisite_id'] . ","; ?>
+												 <option value="<?php echo $prerequisite['prerequisite_id'] ?>" selected="selected"><?php echo $prerequisite['title'] ?></option>
+											<?php endforeach; ?>
+										<?php endif; ?>
+									</select>
+									<input type="hidden" class="form-control er-form-control" name="prerequisite[ids]" id="prerequisites" readonly="" value="<?php echo $values; ?>">
 								</div>
 							</div>
 						</div>
+
+						<br/><br/><br/><br/><br/><br/>
 
 					</div>
 

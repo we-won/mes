@@ -47,7 +47,6 @@ class subjects_controller extends CI_Controller {
 	 		'title',
 	 		'description',
 	 		'units',
-	 		'prerequisite',
 	 		'created',
 	 		'@view:subjects/datatables/action'
 	 	] );
@@ -67,10 +66,13 @@ class subjects_controller extends CI_Controller {
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'subject' ];
+				$data_prereq = $_POST[ 'prerequisite' ];
 
 				$result = $this->subjects_model->create_subject($data);
+				
 				if($result[0]) {
-					
+					$this->subjects_model->update_prereq($result[3], $data_prereq);
+
 					$this->nativesession->set_flashdata( '_subjects', '<div class="alert alert-success">' . $result[1] . '</div>' );
 					redirect(base_url($this->uri->segment(1)));	
 				} else {
@@ -86,6 +88,8 @@ class subjects_controller extends CI_Controller {
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/subjects_css')
+			->set_partial('more_js', 'scripts/subjects_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
 			->build('subjects/subject_form', $data );
@@ -105,8 +109,9 @@ class subjects_controller extends CI_Controller {
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'subject' ];
+				$data_prereq = $_POST[ 'prerequisite' ];
 
-				if($this->subjects_model->update_subject($id, $data)) {
+				if($this->subjects_model->update_subject($id, $data) && $this->subjects_model->update_prereq($id, $data_prereq)) {
 					
 					$this->nativesession->set_flashdata( '_subjects', '<div class="alert alert-success">Subject has been updated.</div>' );
 					redirect(base_url( $this->uri->segment(1)));
@@ -120,10 +125,13 @@ class subjects_controller extends CI_Controller {
 
 		$data = [ 
 			'title' 	=> 'Update Subject',
-			'subject'	=> $this->subjects_model->get_subject($id)
+			'subject'	=> $this->subjects_model->get_subject($id),
+			'prerequisites' => $this->subjects_model->get_subject_prerequisites($id)
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/subjects_css')
+			->set_partial('more_js', 'scripts/subjects_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
 			->build('subjects/subject_form', $data);
@@ -144,4 +152,9 @@ class subjects_controller extends CI_Controller {
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
+	public function get_subjects()
+	{
+		$data = $this->subjects_model->get_subjects(0, 2, $_GET['q'], null);
+		echo json_encode(['items' => $data]);
+	}
 }

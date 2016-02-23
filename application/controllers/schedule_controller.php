@@ -84,6 +84,8 @@ class schedule_controller extends CI_Controller {
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/schedule_css')
+			->set_partial('more_js', 'scripts/schedule_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
 			->build('schedule/schedule_form', $data );
@@ -121,6 +123,8 @@ class schedule_controller extends CI_Controller {
 		];
 
 		$this->template
+			->set_partial('more_css', 'scripts/schedule_css')
+			->set_partial('more_js', 'scripts/schedule_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
 			->build('schedule/schedule_form', $data );

@@ -183,7 +183,7 @@ Modifed by keenthemes for Metronic theme integration.
 
 .select2-search {
     display: inline-block;
-    width: 100%;
+    /*width: 100%;*/
     min-height: 26px;
     margin: 0;
     padding-left: 4px;

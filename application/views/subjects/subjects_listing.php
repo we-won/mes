@@ -26,7 +26,6 @@
 						<th>Title</th>
 						<th>Description</th>
 						<th>Units</th>
-						<th>Prerequisite</th>
 						<th>Date added</th>
 						<th>Actions</th>
 					</tr>

@@ -20,8 +20,11 @@ class schedule_model extends CI_Model
 		if ($schedule_id == 0) return false;
 
 		$q = $this->db->query("
-			SELECT * FROM $this->mes_schedule
-			WHERE id = $schedule_id
+			SELECT a.subject_id, a.days, a.time, a.created, a.is_active,
+			b.description
+			FROM $this->mes_schedule a
+			LEFT JOIN mes_subjects b ON a.subject_id = b.id
+			WHERE a.id = $schedule_id
 			LIMIT 1
 		");
 		
@@ -57,17 +60,44 @@ class schedule_model extends CI_Model
 
 	}
 
-	public function create_schedule( $data )
+	public function create_schedule( $data, $day )
 	{
-		$data['created'] = date("Y-m-d H:i:s");
+		/*$data['created'] = date("Y-m-d H:i:s");
 
 		$this->db->insert( $this->mes_schedule, $data ); 
 
 		if ($this->db->_error_number())
 		{
 			return [0, $this->error_msg = $this->db->_error_message()]; 
-		}
+		}*/
+		
+		$this->db->query("
+			INSERT INTO mes_schedule(schoolyear_id, subject_id) 
+			VALUES((SELECT id FROM mes_schoolyear WHERE is_active = 1), {$data['subject_id']}) 
+		");
 
+		if ($this->db->_error_number())
+		{
+			return [0, $this->error_msg = $this->db->_error_message()]; 
+		}
+		
+		$schedule_id = $this->db->insert_id();
+		
+		$sql = "INSERT INTO mes_subject_schedule(schedule_id, day, start_time, end_time) VALUES ";
+		
+		$i = 0;
+		foreach($day['chk'] as $val) {
+			if ($i++ > 0) $sql .= ', ';
+			$sql .= "($schedule_id, $val, '{$day['start_time'][$val - 1]}', '{$day['end_time'][$val - 1]}')";
+		}
+		
+		$this->db->query($sql);
+		
+		if ($this->db->_error_number())
+		{
+			return [0, $this->error_msg = $this->db->_error_message()]; 
+		}
+		
 		return [1, 'Schedule has been added.'];
 	}
 

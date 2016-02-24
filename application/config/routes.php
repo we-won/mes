@@ -79,3 +79,8 @@ $route['schedule'] = "schedule_controller";
 $route['schedule/new'] = "schedule_controller/new_schedule";
 $route['schedule/(:num)/edit'] = "schedule_controller/edit_schedule/$1";
 $route['schedule/(:num)/delete'] = "schedule_controller/delete_schedule/$1";
+
+$route['enroll'] = "enrollment_controller";
+$route['enroll/new'] = "enrollment_controller/new_enrollment";
+$route['enroll/(:num)/edit'] = "enrollment_controller/edit_enrollment/$1";
+$route['enroll/(:num)/delete'] = "enrollment_controller/delete_enrollment/$1";

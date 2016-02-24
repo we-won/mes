@@ -9,15 +9,21 @@
 
 
 <script src="<?php echo asset_url() ?>mes_scripts/schedule_manager.js"></script>
+<script src="<?php echo asset_url() ?>mes_scripts/subjects_manager.js"></script>
 
 <script>
 	var schedule;
+	var subjects;
 
 	jQuery(document).ready(function() {   
 	   App.init();
 
 	   schedule = new Schedule();
+	   subjects = new Subjects();
+
 	   schedule.init_listing();
 	   schedule.add_schedule();
+
+	   subjects.init_subject_select2(1);
 	});
 </script>

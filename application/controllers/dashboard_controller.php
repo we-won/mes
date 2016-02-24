@@ -12,7 +12,10 @@ class dashboard_controller extends CI_Controller {
 
 	public function index()
 	{	
-
+		if ($this->nativesession->get('user_id') == NULL) {
+			redirect('/');
+		}
+		
 		$data = [ 
 			'title' => 'Dashboard',
 			'account_type' => $this->nativesession->get('account_type') 

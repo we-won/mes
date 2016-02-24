@@ -83,9 +83,9 @@ var Subjects = (function()
     Subjects.prototype.init_subject_select2 = function(maxLength)
     {
         function formatSubjectRepoSelection (repo) {
-          $('#prerequisites').val( $("#selected_subjects").val() );
+          $('#subjects_selected').val( $("#selected_subjects").val() );
 
-          return repo.title || repo.text;
+          return repo.description || repo.text;
         }
 
         function formatSubjectRepo (repo) {
@@ -132,6 +132,12 @@ var Subjects = (function()
             minimumInputLength: 0,
             templateResult: formatSubjectRepo,
             templateSelection: formatSubjectRepoSelection
+        });
+        
+        $(document).on('click', ".select2-selection__choice__remove", function() {
+            if ($('.select2-selection__choice').length == 0) {
+               $('#subjects_selected').attr('value', '');
+            }
         });
     }
 

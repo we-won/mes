@@ -107,12 +107,15 @@ class subjects_model extends CI_Model
 		$prereq = array();
 
 		foreach($ids as $req_id) {
+			if (!is_numeric($req_id) && $req_id <= 0) continue;
+
 			$prereq[] = [
 				'subject_id' => $id,
 				'prerequisite_id' => $req_id
 			];
 		}
 
+		if (sizeof($prereq) > 0)
 		$this->db->insert_batch( 'mes_subject_prerequisites', $prereq );
 
 		return true;

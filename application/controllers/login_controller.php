@@ -50,8 +50,7 @@ class login_controller extends CI_Controller {
 							}
 							
 							$this->nativesession->set( array(
-								'is_gm_logged_in' 	=> true,
-								'admin_id' 			=> $admin['id'],
+								'user_id' 			=> $admin['id'],
 								'username' 			=> $admin['username'],
 								'firstname' 		=> $admin['firstname'],
 								'lastname' 			=> $admin['lastname'],

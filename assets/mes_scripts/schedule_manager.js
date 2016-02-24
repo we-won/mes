@@ -8,7 +8,12 @@ var Schedule = (function()
 		$('.timepicker_slider').timepicker({
 			hourGrid: 4,
 			minuteGrid: 10,
+			stepMinute: 5, 
 			timeFormat: 'hh:mm tt'
+		});
+		
+		$('#box1').click(function() {
+			alert($('#monday').val());
 		});
 	}
 	

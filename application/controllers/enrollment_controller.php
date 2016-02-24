@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class courses_controller extends CI_Controller {
+class enrollment_controller extends CI_Controller {
 
 	function __construct()
 	{
 		# code...
 		parent::__construct();
 
-		$this->load->model(['courses_model']);
+		$this->load->model(['enrollment_model']);
 	}
 
 
@@ -16,17 +16,17 @@ class courses_controller extends CI_Controller {
 		if ($this->nativesession->get('user_id') == NULL) {
 			redirect('/');
 		}
-
+		
 		$data = [ 
 			'title' => ucwords( $this->uri->segment(1) )
 		];
 
 		$this->template
-			->set_partial('more_css', 'scripts/courses_css')
-			->set_partial('more_js', 'scripts/courses_js')
+			->set_partial('more_css', 'scripts/enrollment_css')
+			->set_partial('more_js', 'scripts/enrollment_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_layout('dashboard_template')
-			->build('courses/courses_listing', $data );
+			->build('enrollment/enrollment_listing', $data );
 	}
 
 	public function listings()
@@ -36,10 +36,10 @@ class courses_controller extends CI_Controller {
 		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
 
 		echo $this->datatables->make( [
-	 		'model_loc' 		=> 'courses_model',
-	 		'model' 			=> 'courses_model',
-	 		'func_get'			=> 'get_courses',
-	 		'func_get_max'		=> 'get_max_courses_pages',
+	 		'model_loc' 		=> 'enrollment_model',
+	 		'model' 			=> 'enrollment_model',
+	 		'func_get'			=> 'get_enrollment_list',
+	 		'func_get_max'		=> 'get_max_enrollment_pages',
 	 		'where'				=> '',
 	 		'search' 			=> $search,
 	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
@@ -50,117 +50,117 @@ class courses_controller extends CI_Controller {
 	 		'title',
 	 		'description',
 	 		'created',
-	 		'@view:courses/datatables/action'
+	 		'@view:enrollment/datatables/action'
 	 	] );
 	}
 
-	public function new_course()
+	public function new_enrollment()
 	{	
 		$this->load->helper( array('form', 'url') );
 		$this->load->library( 'form_validation' );
 
-		if (isset($_POST[ 'course' ])) {
-			$this->form_validation->set_rules('course[code]', 'Code', 'required');
-			$this->form_validation->set_rules('course[title]', 'Title', 'required');
-			$this->form_validation->set_rules('course[description]', 'Description', 'required');
+		if (isset($_POST[ 'enrollment' ])) {
+			$this->form_validation->set_rules('enrollment[code]', 'Code', 'required');
+			$this->form_validation->set_rules('enrollment[title]', 'Title', 'required');
+			$this->form_validation->set_rules('enrollment[description]', 'Description', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
-				$data = $_POST[ 'course' ];
+				$data = $_POST[ 'enrollment' ];
 
-				$result = $this->courses_model->create_course($data);
+				$result = $this->enrollment_model->create_enrollment($data);
 				if($result[0]) {
 					
-					$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-success">' . $result[1] . '</div>' );
+					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">' . $result[1] . '</div>' );
 					redirect(base_url($this->uri->segment(1)));	
 				} else {
 
-					$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
+					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
 				}
 			}
 
 		}
 
 		$data = [ 
-			'title' => 'New Course'
+			'title' => 'New Enrollment'
 		];
 
 		$this->template
-			->set_partial('more_css', 'scripts/course_form_css')
-			->set_partial('more_js', 'scripts/course_form_js')
+			->set_partial('more_css', 'scripts/enrollment_form_css')
+			->set_partial('more_js', 'scripts/enrollment_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
-			->build('courses/course_form', $data );
+			->build('enrollment/enrollment_form', $data );
 	}
 
-	public function edit_course( $id = 0 )
+	public function edit_enrollment( $id = 0 )
 	{	
 		$this->load->helper( array('form', 'url') );
 		$this->load->library( 'form_validation' );
 
-		if (isset($_POST[ 'course' ])) {
-			$this->form_validation->set_rules('course[code]', 'Code', 'required');
-			$this->form_validation->set_rules('course[title]', 'Title', 'required');
-			$this->form_validation->set_rules('course[description]', 'Description', 'required');
+		if (isset($_POST[ 'enrollment' ])) {
+			$this->form_validation->set_rules('enrollment[code]', 'Code', 'required');
+			$this->form_validation->set_rules('enrollment[title]', 'Title', 'required');
+			$this->form_validation->set_rules('enrollment[description]', 'Description', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
-				$data = $_POST[ 'course' ];
+				$data = $_POST[ 'enrollment' ];
 
-				if($this->courses_model->update_course($id, $data)) {
+				if($this->enrollment_model->update_enrollment($id, $data)) {
 					
-					$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-success">Course has been updated.</div>' );
+					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been updated.</div>' );
 					redirect(base_url( $this->uri->segment(1)));
 				} else {
 
-					$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-danger">Unable to update course, please try again.</div>' );	
+					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-danger">Unable to update enrollment, please try again.</div>' );	
 				}
 			}
 
 		}
 
 		$data = [ 
-			'title' 	=> 'Update Course',
-			'course'	=> $this->courses_model->get_course($id)
+			'title' 	=> 'Update Enrollment',
+			'enrollment'	=> $this->enrollment_model->get_enrollment($id)
 		];
 
 		$this->template
-			->set_partial('more_css', 'scripts/course_form_css')
-			->set_partial('more_js', 'scripts/course_form_js')
+			->set_partial('more_css', 'scripts/enrollment_form_css')
+			->set_partial('more_js', 'scripts/enrollment_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
 			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
-			->build('courses/course_form', $data);
+			->build('enrollment/enrollment_form', $data);
 	}
 
-	public function delete_course( $id = 0 )
+	public function delete_enrollment( $id = 0 )
 	{	
 		if( $id > 0 )
 		{
-			$this->courses_model->delete_course( $id );
-			$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-success">Course has been removed.</div>' );	
+			$this->enrollment_model->delete_enrollment( $id );
+			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been removed.</div>' );	
 		}
 		else
 		{
-			$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-danger">Cannot remove record.</div>' );	
 		}
 		
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
-	public function curriculum_listing($course_id = 0)
+	public function curriculum_listing($enrollment_id = 0)
 	{	
 		$this->load->library('Datatables');
 		
 		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
 
 		echo $this->datatables->make( [
-	 		'model_loc' 		=> 'courses_model',
-	 		'model' 			=> 'courses_model',
+	 		'model_loc' 		=> 'enrollment_model',
+	 		'model' 			=> 'enrollment_model',
 	 		'func_get'			=> 'get_curriculum_list',
 	 		'func_get_max'		=> 'get_max_curriculum_list',
-	 		'where'				=> [ 'course_id' => $course_id ],
+	 		'where'				=> [ 'enrollment_id' => $enrollment_id ],
 	 		'search' 			=> $search,
 	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
@@ -170,7 +170,7 @@ class courses_controller extends CI_Controller {
 	 		'semester',
 	 		'total_subjects',
 	 		'total_units',
-	 		'@view:courses/datatables/curriculum_list_action'
+	 		'@view:enrollment/datatables/curriculum_list_action'
 	 	] );
 	}
 

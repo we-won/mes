@@ -13,7 +13,10 @@ class schedule_controller extends CI_Controller {
 
 	public function index()
 	{	
-
+		if ($this->nativesession->get('user_id') == NULL) {
+			redirect('/');
+		}
+		
 		$data = [ 
 			'title' => ucwords( $this->uri->segment(1) )
 		];
@@ -58,19 +61,20 @@ class schedule_controller extends CI_Controller {
 
 		if (isset($_POST[ 'schedule' ])) {
 			$this->form_validation->set_rules('schedule[subject_id]', 'Subject', 'required');
-			$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
-			$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
+			//$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
+			//$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
 			
 			
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'schedule' ];
+				$day = $_POST[ 'day' ];
 
-				$result = $this->schedule_model->create_schedule($data);
+				$result = $this->schedule_model->create_schedule($data, $day);
 				if($result[0]) {
-					
+					print_r($day);
 					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-success">' . $result[1] . '</div>' );
-					redirect(base_url($this->uri->segment(1)));	
+					//redirect(base_url($this->uri->segment(1)));	
 				} else {
 
 					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-danger">' . $result[1] . '</div>' );	

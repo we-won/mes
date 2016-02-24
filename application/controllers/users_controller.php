@@ -13,6 +13,9 @@ class users_controller extends CI_Controller {
 
 	public function index()
 	{	
+		if ($this->nativesession->get('user_id') == NULL) {
+			redirect('/');
+		}
 
 		$data = [ 
 			'title' => ucwords( $this->uri->segment(1) )

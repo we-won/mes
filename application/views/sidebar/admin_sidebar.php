@@ -22,9 +22,9 @@
 	</a>
 </li>
 
-<li class="<?php echo ( $this->uri->segment(1) == 'schoolyear' ? 'active ' : '' ) ?>">
+<li class="<?php echo ( ($this->uri->segment(1) == 'schoolyear' ||  $this->uri->segment(1) == 'management') ? 'start active ' : '' ) ?>">
 	<a href="javascript:;"><i class="fa fa-building"></i><span class="title">Management</span>
-		<?php if( $this->uri->segment(1) == 'schoolyear' ) : ?>
+		<?php if( $this->uri->segment(1) == 'management' ) : ?>
 		<span class="selected">	</span>
 		<?php endif; ?>
 		<span class="arrow <?php echo ( $this->uri->segment(1) == 'management' ? 'open ' : '' ) ?>"></span>

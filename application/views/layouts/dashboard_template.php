@@ -58,7 +58,7 @@
 		<ul class="nav navbar-nav pull-right">
 			
 			<!-- BEGIN INBOX DROPDOWN -->
-			<li class="dropdown" id="header_inbox_bar">
+			<!-- <li class="dropdown" id="header_inbox_bar">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<i class="fa fa-envelope"></i>
 				<span class="badge">
@@ -97,7 +97,7 @@
 						<a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
 					</li>
 				</ul>
-			</li>
+			</li> -->
 			<!-- END INBOX DROPDOWN -->
 
 			<!-- BEGIN USER LOGIN DROPDOWN -->
@@ -231,7 +231,7 @@
 <script src="<?php echo asset_plugins() ?>bootstrap-duallistbox/js/jquery.bootstrap.js" type="text/javascript"/></script>
 
 <link href="<?php echo asset_plugins() ?>select2/select2.min.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo asset_plugins() ?>select2/select2.min.js" type="text/javascript"/></script>
+<script src="<?php echo asset_plugins() ?>select2/select2.full.min.js" type="text/javascript"/></script>
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?php echo asset_url() ?>scripts/app.js"></script>

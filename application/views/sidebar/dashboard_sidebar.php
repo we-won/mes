@@ -41,6 +41,7 @@
 							include 'registrar_sidebar.php'; 
 							break;
 						case CASHIER:
+							include 'cashier_sidebar.php'; 
 							break;
 					}	
 				?>

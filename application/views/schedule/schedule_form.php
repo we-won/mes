@@ -23,7 +23,12 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Subject</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="schedule[subject_id]" value="<?php echo isset($schedule) ? $schedule['subject_id'] : ''; ?>">
+									<select class="erSubjects form-control" id="selected_subjects" multiple="multiple">
+										<?php if (isset($schedule)) : ?>
+												 <option value="<?php echo $schedule['subject_id'] ?>" selected="selected"><?php echo $schedule['description'] ?></option>
+										<?php endif; ?>
+									</select>
+									<input type="hidden" class="form-control er-form-control" name="schedule[subject_id]" id="subjects_selected" readonly="" value="<?php echo isset($schedule) ? $schedule['subject_id'] : ''; ?>">
 								</div>
 							</div>
 						</div>
@@ -32,14 +37,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Monday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="1" />
 								</div>
 							</div>
 						</div>
@@ -48,14 +52,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Tuesday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="2" />
 								</div>
 							</div>
 						</div>
@@ -64,14 +68,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Wednesday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="3" />
 								</div>
 							</div>
 						</div>
@@ -80,14 +84,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Thursday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="4" />
 								</div>
 							</div>
 						</div>
@@ -96,14 +100,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Friday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="5" />
 								</div>
 							</div>
 						</div>
@@ -112,14 +116,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Saturday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="6" />
 								</div>
 							</div>
 						</div>
@@ -128,14 +132,14 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Sunday</label>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 									
 								</div>
 								<div class="col-sm-2">
-									<input type="text" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<a href="#" class="btn btn-info" id="btn-add"><i class="fa fa-check-square" ></i></a>
+									<input name="day[chk][]" type="checkbox" value="7" />
 								</div>
 							</div>
 						</div>

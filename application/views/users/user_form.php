@@ -21,7 +21,7 @@
 					<div class="col-sm-9">
 						<h4 class="form-section">User Information</h4>
 
-						<div class="col-sm-12">
+						<div class="col-sm-12">						
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Username</label>
 								<div class="col-sm-10">

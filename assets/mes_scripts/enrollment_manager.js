@@ -101,8 +101,11 @@ var Enrollment = (function()
     {
         function formatStudentRepoSelection (repo) {
           $('#students_selected').val( $("#selected_students").val() );
-
-          return '(' + repo.number + ') ' + repo.lastname + ', ' + repo.firstname + ', ' + repo.middlename[0] || repo.text;
+          
+          if (repo.number) 
+            return '(' + repo.number + ') ' + repo.lastname + ', ' + repo.firstname + ' ' + repo.middlename[0];
+          else 
+            return repo.text;
         }
 
         function formatStudentRepo (repo) {

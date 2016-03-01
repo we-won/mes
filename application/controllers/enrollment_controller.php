@@ -106,9 +106,9 @@ class enrollment_controller extends CI_Controller {
 		$this->load->library( 'form_validation' );
 
 		if (isset($_POST[ 'enrollment' ])) {
-			$this->form_validation->set_rules('enrollment[code]', 'Code', 'required');
-			$this->form_validation->set_rules('enrollment[title]', 'Title', 'required');
-			$this->form_validation->set_rules('enrollment[description]', 'Description', 'required');
+			$this->form_validation->set_rules('enrollment[student_id]', 'Student', 'required');
+			$this->form_validation->set_rules('enrollment[course_id]', 'Course', 'required');
+			$this->form_validation->set_rules('enrollment[year]', 'Year', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				

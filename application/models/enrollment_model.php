@@ -22,8 +22,12 @@ class enrollment_model extends CI_Model
 		if ($enrollment_id == 0) return false;
 
 		$q = $this->db->query("
-			SELECT * FROM $this->mes_enrollment
-			WHERE id = $enrollment_id
+			SELECT a.id, a.student_id, a.course_id, a.year, a.sy_id, a.added, a.status,
+			CONCAT(b.lastname, ', ', b.firstname, ' ', b.middlename) as student_name, b.number as student_number, c.description as course_description
+			FROM $this->mes_enrollment a
+			LEFT JOIN mes_students b ON a.student_id = b.id
+			LEFT JOIN mes_courses c ON a.course_id = c.id
+			WHERE a.id = $enrollment_id
 			LIMIT 1
 		");
 		

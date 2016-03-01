@@ -25,12 +25,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Student</label>
 								<div class="col-sm-10">
-									<select class="erStudents form-control" id="selected_students" multiple="multiple">
-										<?php if (isset($enrollment)) : ?>
-												 <option value="<?php echo $enrollment['student_id'] ?>" selected="selected"><?php echo $enrollment['student_lastname'] ?></option>
-										<?php endif; ?>
-									</select>
-									<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="<?php echo isset($enrollment) ? $enrollment['student_id'] : ''; ?>">
+									<?php if (isset($enrollment)) : ?>
+										<input type="text" disabled class="form-control" value="<?php echo '(' . $enrollment['student_number'] . ') ' . $enrollment['student_name']; ?>">
+										<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="<?php echo $enrollment['student_id']; ?>">
+									<?php else : ?>
+										<select class="erStudents form-control" id="selected_students" multiple="multiple"></select>
+										<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="">
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
@@ -41,7 +42,7 @@
 								<div class="col-sm-10">
 									<select class="erCourses form-control" id="selected_courses" multiple="multiple">
 										<?php if (isset($enrollment)) : ?>
-												 <option value="<?php echo $enrollment['course_id'] ?>" selected="selected"><?php echo $enrollment['description'] ?></option>
+												<option value="<?php echo $enrollment['course_id'] ?>" selected="selected"><?php echo $enrollment['course_description'] ?></option>
 										<?php endif; ?>
 									</select>
 									<input type="hidden" class="form-control er-form-control" name="enrollment[course_id]" id="courses_selected" readonly="" value="<?php echo isset($enrollment) ? $enrollment['course_id'] : ''; ?>">

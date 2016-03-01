@@ -9,7 +9,6 @@
 	var courses;
 
 	jQuery(document).ready(function() {   
-	   App.init();
 
 	   courses = new Courses();
 	   courses.init_curriculum_listing();

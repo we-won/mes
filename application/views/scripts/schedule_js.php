@@ -16,7 +16,6 @@
 	var subjects;
 
 	jQuery(document).ready(function() {   
-	   App.init();
 
 	   schedule = new Schedule();
 	   subjects = new Subjects();

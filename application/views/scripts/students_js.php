@@ -9,8 +9,7 @@
 	var students;
 
 	jQuery(document).ready(function() {   
-	   App.init();
-
+		
 	   students = new Students();
 	   students.init_listing();
 	});

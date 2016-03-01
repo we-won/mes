@@ -81,8 +81,16 @@ class schoolyear_controller extends CI_Controller {
 
 		}
 
+		$sem = 1;
+		$m = date("n");
+		if ($m >= 6 && $m <= 10) $sem = 1;
+		elseif ($m >= 11 && $m <= 3) $sem = 2;
+		elseif ($m >= 4 && $m <= 5) $sem = 3;
+
 		$data = [ 
-			'title' => 'New Schoolyear'
+			'title' => 'New Schoolyear',
+			'year' => date("Y"),
+			'sem' => $sem
 		];
 
 		$this->template

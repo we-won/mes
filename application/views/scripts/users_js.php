@@ -9,7 +9,6 @@
 	var users;
 
 	jQuery(document).ready(function() {   
-	   App.init();
 
 	   users = new Users();
 	   users.init_listing();

@@ -35,7 +35,7 @@
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Monday</label>
+								<label class="control-label col-sm-2" for="">Monday <?php echo $time[0]['day']; ?></label>
 								<div class="col-sm-2">
 									<input type="text" id="monday" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>

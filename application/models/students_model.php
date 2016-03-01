@@ -86,4 +86,22 @@ class students_model extends CI_Model
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
+	public function generate_id()
+	{
+		$this->load->model(['schoolyear_model']);
+
+		$sy_info = $this->schoolyear_model->get_active_sy();
+
+		$q = $this->db->query("
+			SELECT count(*) as count FROM $this->mes_students
+			WHERE created >= '{$sy_info['created']}'
+		");
+
+		$yy = substr($sy_info['year'], 2, 3);
+		$s = $sy_info['sem'];
+		$xxxx = sprintf( '%04d', $q->row_array()['count'] );
+
+		return $yy . $s . $xxxx;
+	}
+
 }

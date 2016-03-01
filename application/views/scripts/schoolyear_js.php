@@ -9,8 +9,7 @@
 	var schoolyear;
 
 	jQuery(document).ready(function() {   
-	   App.init();
-
+		
 	   schoolyear = new Schoolyear();
 	   schoolyear.init_listing();
 	});

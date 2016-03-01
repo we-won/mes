@@ -7,7 +7,7 @@ class enrollment_controller extends CI_Controller {
 		# code...
 		parent::__construct();
 
-		$this->load->model(['enrollment_model']);
+		$this->load->model(['enrollment_model', 'schoolyear_model', 'schedule_model']);
 	}
 
 
@@ -17,8 +17,12 @@ class enrollment_controller extends CI_Controller {
 			redirect('/');
 		}
 		
+		$sy_info = $this->schoolyear_model->get_active_sy();
+
 		$data = [ 
-			'title' => ucwords( $this->uri->segment(1) )
+			'title' => ucwords( $this->uri->segment(1) ),
+			'sy' => $sy_info['year'],
+			'sem' => $sy_info['sem']
 		];
 
 		$this->template
@@ -46,10 +50,12 @@ class enrollment_controller extends CI_Controller {
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
-	 		'code',
-	 		'title',
-	 		'description',
-	 		'created',
+	 		'student_number',
+	 		'student_name',
+	 		'course_title',
+	 		'year',
+	 		'@view:enrollment/datatables/status',
+	 		'added',
 	 		'@view:enrollment/datatables/action'
 	 	] );
 	}
@@ -60,15 +66,15 @@ class enrollment_controller extends CI_Controller {
 		$this->load->library( 'form_validation' );
 
 		if (isset($_POST[ 'enrollment' ])) {
-			$this->form_validation->set_rules('enrollment[code]', 'Code', 'required');
-			$this->form_validation->set_rules('enrollment[title]', 'Title', 'required');
-			$this->form_validation->set_rules('enrollment[description]', 'Description', 'required');
+			$this->form_validation->set_rules('enrollment[student_id]', 'Student', 'required');
+			$this->form_validation->set_rules('enrollment[course_id]', 'Course', 'required');
+			$this->form_validation->set_rules('enrollment[year]', 'Year', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'enrollment' ];
 
-				$result = $this->enrollment_model->create_enrollment($data);
+				$result = $this->enrollment_model->new_enrollment($data);
 				if($result[0]) {
 					
 					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">' . $result[1] . '</div>' );
@@ -78,18 +84,18 @@ class enrollment_controller extends CI_Controller {
 					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-danger">' . $result[1] . '</div>' );	
 				}
 			}
-
 		}
 
 		$data = [ 
-			'title' => 'New Enrollment'
+			'title' => 'New Enrollment',
+			'schedules' => $this->schedule_model->get_sy_schedules()
 		];
 
+		
 		$this->template
 			->set_partial('more_css', 'scripts/enrollment_form_css')
 			->set_partial('more_js', 'scripts/enrollment_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
-			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
 			->build('enrollment/enrollment_form', $data );
 	}
@@ -129,7 +135,6 @@ class enrollment_controller extends CI_Controller {
 			->set_partial('more_css', 'scripts/enrollment_form_css')
 			->set_partial('more_js', 'scripts/enrollment_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
-			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
 			->set_layout('dashboard_template')
 			->build('enrollment/enrollment_form', $data);
 	}
@@ -149,56 +154,9 @@ class enrollment_controller extends CI_Controller {
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
-	public function curriculum_listing($enrollment_id = 0)
-	{	
-		$this->load->library('Datatables');
-		
-		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
-
-		echo $this->datatables->make( [
-	 		'model_loc' 		=> 'enrollment_model',
-	 		'model' 			=> 'enrollment_model',
-	 		'func_get'			=> 'get_curriculum_list',
-	 		'func_get_max'		=> 'get_max_curriculum_list',
-	 		'where'				=> [ 'enrollment_id' => $enrollment_id ],
-	 		'search' 			=> $search,
-	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
-	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
-	 		'sEcho'				=> $_GET['sEcho']
-	 	], [ 
-	 		'year',
-	 		'semester',
-	 		'total_subjects',
-	 		'total_units',
-	 		'@view:enrollment/datatables/curriculum_list_action'
-	 	] );
-	}
-
-	public function edit_curriculum()
+	public function get_students()
 	{
-		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course']))) return false;
-
-		$course = $_POST['course'];
-		$year = $_POST['year'];
-		$sem = $_POST['sem'];
-
-		$data['year'] = $year;
-		$data['sem'] = $sem;
-
-		$data['subjects'] = $this->courses_model->get_curriculum($course, $year, $sem);
-
-		echo $this->load->view('modals/curriculum_edit_modal_data', compact('data'), TRUE);
-	}
-
-	public function save_curriculum()
-	{
-		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course'])) || !(isset($_POST['subjects']))) return false;
-
-		$course = $_POST['course'];
-		$year = $_POST['year'];
-		$sem = $_POST['sem'];
-		$subjects = $_POST['subjects'];
-
-		echo $this->courses_model->save_curriculum($course, $year, $sem, $subjects);
+		$data = $this->enrollment_model->get_students($_GET['q']);
+		echo json_encode(['items' => $data]);
 	}
 }

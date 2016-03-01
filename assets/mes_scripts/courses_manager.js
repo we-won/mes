@@ -199,5 +199,66 @@ var Courses = (function()
         });
     }
 
+    Courses.prototype.init_course_select2 = function(maxLength)
+    {
+        function formatCourseRepoSelection (repo) {
+          $('#courses_selected').val( $("#selected_courses").val() );
+
+          return repo.description || repo.text;
+        }
+
+        function formatCourseRepo (repo) {
+            if (repo.loading) return repo.text;
+
+             var markup = '<div class="clearfix">' +
+                            '<div class="col-sm-12 no-space">' +
+                             repo.description +
+                            '</div>';
+
+            return markup;
+        }
+
+        $(".erCourses").select2({
+            maximumSelectionLength: maxLength,
+            placeholder: "Course",
+            ajax: {
+                url: "/mes/courses_controller/get_courses",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                return {
+                  q: params.term, // search term
+                  page: params.page
+                };
+                },
+                processResults: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+
+                return {
+                  results: data.items,
+                  pagination: {
+                    more: (params.page * 30) < data.total_count
+                  }
+                };
+                },
+                cache: true
+                },
+            escapeMarkup: function (markup) { return markup; },
+            minimumInputLength: 0,
+            templateResult: formatCourseRepo,
+            templateSelection: formatCourseRepoSelection
+        });
+        
+        $(document).on('click', ".select2-selection__choice__remove", function() {
+            if ($('.select2-selection__choice').length == 0) {
+               $('#courses_selected').attr('value', '');
+            }
+        });
+    }
+
 	return Courses;
 })();

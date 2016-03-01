@@ -47,9 +47,7 @@ class schedule_controller extends CI_Controller {
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
 	 		'subject_name',
-	 		'days',
-	 		'time',
-	 		'created',
+	 		'schedule',
 	 		'@view:schedule/datatables/action'
 	 	] );
 	}
@@ -123,7 +121,8 @@ class schedule_controller extends CI_Controller {
 
 		$data = [ 
 			'title' => 'Update Schedule',
-			'schedule'	=> $this->schedule_model->get_schedule($id)
+			'schedule'	=> $this->schedule_model->get_schedule($id),
+			'time' => $this->schedule_model->get_schedule_time($id)
 		];
 
 		$this->template

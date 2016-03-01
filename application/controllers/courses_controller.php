@@ -201,4 +201,10 @@ class courses_controller extends CI_Controller {
 
 		echo $this->courses_model->save_curriculum($course, $year, $sem, $subjects);
 	}
+	
+	public function get_courses()
+	{
+		$data = $this->courses_model->get_courses(0, 5, $_GET['q'], null);
+		echo json_encode(['items' => $data]);
+	}
 }

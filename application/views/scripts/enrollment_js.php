@@ -9,9 +9,8 @@
 	var enrollment;
 
 	jQuery(document).ready(function() {   
-	   App.init();
 
-	   courses = new Courses();
-	   courses.init_listing();
+	   enrollment = new Enrollment();
+	   enrollment.init_listing();
 	});
 </script>

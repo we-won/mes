@@ -23,9 +23,7 @@
 				<thead>
 					<tr>
 						<th>Subject</th>
-						<th>Days</th>
-						<th>Time</th>
-						<th>Date added</th>
+						<th>Schedule</th>
 						<th>Actions</th>
 					</tr>
 				</thead>

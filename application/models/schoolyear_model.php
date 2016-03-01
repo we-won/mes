@@ -103,4 +103,14 @@ class schoolyear_model extends CI_Model
 
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
+
+	public function get_active_sy()
+	{
+		$q = $this->db->query("
+			SELECT * FROM $this->mes_schoolyear
+			WHERE is_active = 1
+		");
+		
+		return $q->row_array();
+	}
 }

@@ -20,8 +20,7 @@ class schedule_model extends CI_Model
 		if ($schedule_id == 0) return false;
 
 		$q = $this->db->query("
-			SELECT a.subject_id, a.days, a.time, a.created, a.is_active,
-			b.description
+			SELECT a.subject_id, b.description 
 			FROM $this->mes_schedule a
 			LEFT JOIN mes_subjects b ON a.subject_id = b.id
 			WHERE a.id = $schedule_id
@@ -32,15 +31,39 @@ class schedule_model extends CI_Model
 
 	}
 	
+	public function get_schedule_time( $schedule_id = 0 )
+	{
+		if ($schedule_id == 0) return false;
+
+		$q = $this->db->query("
+			SELECT day, start_time, end_time FROM mes_subject_schedule WHERE schedule_id = $schedule_id
+		");
+		
+		return $q->result_array();
+	}
+	
 	public function get_schedule_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
-		$q = $this->db->query("
+		/*$q = $this->db->query("
 			SELECT a.subject_id, a.days, a.time, a.created, a.is_active,
 			b.title as subject_name
 			FROM $this->mes_schedule a
 			LEFT JOIN mes_subjects b ON a.subject_id = b.id
 			WHERE b.title LIKE '%$search%'
 			AND a.is_active <> 0
+			LIMIT $start, $limit
+		");*/
+		
+		$q = $this->db->query("
+			SELECT a.id, b.title as subject_name, 
+			GROUP_CONCAT(d.code1, '(', c.start_time, ' - ', c.end_time, ')' ORDER BY c.day SEPARATOR ', ') as schedule 
+			FROM mes_schedule a 
+			LEFT JOIN mes_subjects b ON a.subject_id = b.id 
+			LEFT JOIN mes_subject_schedule c ON c.schedule_id = a.id 
+			LEFT JOIN mes_days d ON d.id = c.day
+			AND a.is_active <> 0 
+			WHERE b.title LIKE '%$search%' 
+			GROUP BY a.id 
 			LIMIT $start, $limit
 		");
 		
@@ -117,6 +140,25 @@ class schedule_model extends CI_Model
 		$this->db->update( $this->mes_schedule, $data ); 
 
 		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function get_sy_schedules()
+	{
+		$this->load->model('schoolyear_model');
+
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
+		$q = $this->db->query("
+			SELECT a.id, a.schoolyear_id, a.subject_id,
+			b.title as subject_title, b.units
+			FROM mes_schedule a
+			LEFT JOIN mes_subjects b ON a.subject_id = b.id
+			WHERE a.schoolyear_id = $sy_id
+			AND a.is_active = 1
+		");
+		
+		return $q->result();
+	
 	}
 
 }

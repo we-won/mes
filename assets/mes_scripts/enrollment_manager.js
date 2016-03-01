@@ -1,13 +1,13 @@
-var Students = (function() 
+var Enrollment = (function() 
 {
 	var _obj;
 
-	function Students() 
+	function Enrollment() 
 	{
 		_obj = this;
 	}
 	
-	Students.prototype.init_listing = function()
+	Enrollment.prototype.init_listing = function()
 	{
 		if (!jQuery().dataTable) {
 			alert('error');
@@ -15,7 +15,7 @@ var Students = (function()
         }
 
             // begin first table
-            $('#tbl_students').dataTable({
+            $('#tbl_enrollment').dataTable({
                 "sDom" : "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", //default layout without horizontal scroll(remove this setting to enable horizontal scroll for the table)
                 "aLengthMenu": [
                     [10, 25, 50, 100, -1],
@@ -23,7 +23,7 @@ var Students = (function()
                 ],
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": $('table#tbl_students').data('source'),
+                "sAjaxSource": $('table#tbl_enrollment').data('source'),
                 // set the initial value
                 "iDisplayLength": 10,
                 "sPaginationType": "bootstrap_full_number",
@@ -60,11 +60,11 @@ var Students = (function()
             });
 
 
-            jQuery('#tbl_students_wrapper .dataTables_filter input').addClass("form-control input-medium"); // modify table search input
-            jQuery('#tbl_students_wrapper .dataTables_length select').addClass("form-control input-small"); // modify table per page dropdown
+            jQuery('#tbl_enrollment_wrapper .dataTables_filter input').addClass("form-control input-medium"); // modify table search input
+            jQuery('#tbl_enrollment_wrapper .dataTables_length select').addClass("form-control input-small"); // modify table per page dropdown
 
             // handle record edit/remove
-            $('body').on('click', '#tbl_students_wrapper .btn-editable', function() {
+            $('body').on('click', '#tbl_enrollment_wrapper .btn-editable', function() {
                 alert('Edit record with id:' + $(this).attr("data-id"));
             });
 
@@ -80,7 +80,24 @@ var Students = (function()
             });
 	}
 
-    Students.prototype.init_student_select2 = function(maxLength)
+    Enrollment.prototype.init_enroll_schedule = function()
+    {
+        $('select[name="duallistbox_enrollSchedule[]"]').bootstrapDualListbox();
+        
+       /* $("#testfunction").click(function(e) {
+            e.preventDefault();
+
+            var subjects = $('[name="duallistbox_enrollSchedule[]"]').val();
+            
+            console.log(subjects);
+
+            return false;
+        });*/
+
+      
+    }
+
+    Enrollment.prototype.init_student_select2 = function(maxLength)
     {
         function formatStudentRepoSelection (repo) {
           $('#students_selected').val( $("#selected_students").val() );
@@ -103,7 +120,7 @@ var Students = (function()
             maximumSelectionLength: maxLength,
             placeholder: "Student",
             ajax: {
-                url: "/mes/students_controller/get_students",
+                url: "/mes/enrollment_controller/get_students",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
@@ -141,5 +158,5 @@ var Students = (function()
         });
     }
 
-	return Students;
+	return Enrollment;
 })();

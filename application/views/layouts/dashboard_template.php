@@ -243,7 +243,9 @@
 <?php echo ( isset( $template['partials']['more_js'] ) ? $template['partials']['more_js'] : '' ); ?>
 <!-- END OF MORE JS -->
 
-
+<script>
+	App.init();
+</script>
 
 
 </body>

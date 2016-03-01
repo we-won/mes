@@ -13,6 +13,8 @@ class enrollment_model extends CI_Model
 		parent::__construct();		
 		$this->error_no = 0;
 		$this->error_msg = '';
+
+		$this->load->model(['schoolyear_model']);
 	}
 
 	public function get_enrollment( $enrollment_id = 0 )
@@ -30,11 +32,16 @@ class enrollment_model extends CI_Model
 	
 	public function get_enrollment_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
 		$q = $this->db->query("
-			SELECT *
-			FROM $this->mes_enrollment
-			WHERE (code LIKE '%$search%' OR title LIKE '%$search%')
-			AND is_active = 1
+			SELECT a.id, a.student_id, a.course_id, a.year, a.sy_id, a.added, a.status,
+			CONCAT(b.lastname, ', ', b.firstname) as student_name, b.number as student_number, c.title as course_title
+			FROM $this->mes_enrollment a
+			LEFT JOIN mes_students b ON a.student_id = b.id
+			LEFT JOIN mes_courses c ON a.course_id = c.id
+			WHERE b.lastname LIKE '%$search%'
+			AND a.sy_id = $sy_id
 			LIMIT $start, $limit
 		");
 		
@@ -44,9 +51,11 @@ class enrollment_model extends CI_Model
 
 	public function get_max_enrollment_pages( $search = null, $where = null )
 	{
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_enrollment
-			WHERE is_active = 1
+			WHERE sy_id = $sy_id
 		");
 		
 		$return = $q->row_array()['count'];
@@ -54,8 +63,10 @@ class enrollment_model extends CI_Model
 
 	}
 
-	public function create_enrollment( $data )
+	public function new_enrollment( $data )
 	{
+		$data['sy_id'] = $sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
 		$this->db->insert( $this->mes_enrollment, $data ); 
 
 		if ($this->db->_error_number())
@@ -63,7 +74,7 @@ class enrollment_model extends CI_Model
 			return [0, $this->error_msg = $this->db->_error_message()]; 
 		}
 
-		return [1, 'Enrollee has been added.'];
+		return [1, 'Student has been reserved.'];
 	}
 
 	public function update_enrollment( $id, $data )
@@ -160,7 +171,22 @@ class enrollment_model extends CI_Model
 			}
 
 			$this->db->insert_batch('mes_curriculum', $data); 
-		}
-		
+		}	
 	}
+
+	public function get_students($search)
+	{
+		$q = $this->db->query("
+			SELECT a.id, a.number, a.firstname, a.middlename, a.lastname, a.created
+			FROM mes_students a
+			LEFT JOIN mes_enrollment b ON b.student_id = a.id
+			WHERE (a.number LIKE '%$search%' OR a.firstname LIKE '%$search%' OR a.middlename LIKE '%$search%' OR a.lastname LIKE '%$search%')
+			AND a.is_active <> 0
+			AND b.id IS NULL
+			LIMIT 5
+		");
+		
+		return $q->result();
+	}
+
 }

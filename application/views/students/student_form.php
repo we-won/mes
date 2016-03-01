@@ -25,7 +25,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Student Number</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="student[number]" value="<?php echo isset($student) ? $student['number'] : ''; ?>">
+									<input type="text" class="form-control" name="student[number]" value="<?php echo isset($student) ? $student['number'] : $id; ?>">
 								</div>
 							</div>
 						</div>

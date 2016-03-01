@@ -25,7 +25,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Year</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="schoolyear[year]" value="<?php echo isset($schoolyear) ? $schoolyear['year'] : ''; ?>">
+									<input type="text" class="form-control" name="schoolyear[year]" value="<?php echo isset($schoolyear) ? $schoolyear['year'] : $year; ?>">
 								</div>
 							</div>
 						</div>
@@ -34,7 +34,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Semester</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="schoolyear[sem]" value="<?php echo isset($schoolyear) ? $schoolyear['sem'] : ''; ?>"> 
+									<input type="text" class="form-control" name="schoolyear[sem]" value="<?php echo isset($schoolyear) ? $schoolyear['sem'] : $sem; ?>"> 
 								</div>
 							</div>
 						</div>

@@ -83,7 +83,8 @@ class students_controller extends CI_Controller {
 		}
 
 		$data = [ 
-			'title' => 'New Student'
+			'title' => 'New Student',
+			'id' => $this->students_model->generate_id()
 		];
 
 		$this->template
@@ -145,4 +146,9 @@ class students_controller extends CI_Controller {
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
+	public function get_students()
+	{
+		$data = $this->students_model->get_students(0, 2, $_GET['q'], null);
+		echo json_encode(['items' => $data]);
+	}
 }

@@ -8,82 +8,83 @@
 	<div class="portlet-body form">
 		<br>
 		<div class="col-sm-12">
-			<?php echo $this->nativesession->flashdata( '_courses' ); ?>
+			<?php echo $this->nativesession->flashdata( '_enrollment' ); ?>
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 		</div>
 
-		<form id="frmcourse" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
+		<form id="frmenrollment" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
 			<div class="form-body">
 
 
 				<div class="row">
 
 					<div class="col-sm-9">
-						<h4 class="form-section">Course Information</h4>
+						<h4 class="form-section">Enrollment Information</h4>
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Code</label>
+								<label class="control-label col-sm-2" for="">Student</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[code]" value="<?php echo isset($course) ? $course['code'] : ''; ?>">
+									<select class="erStudents form-control" id="selected_students" multiple="multiple">
+										<?php if (isset($enrollment)) : ?>
+												 <option value="<?php echo $enrollment['student_id'] ?>" selected="selected"><?php echo $enrollment['student_lastname'] ?></option>
+										<?php endif; ?>
+									</select>
+									<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="<?php echo isset($enrollment) ? $enrollment['student_id'] : ''; ?>">
 								</div>
 							</div>
 						</div>
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Title</label>
+								<label class="control-label col-sm-2" for="">Course</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[title]" value="<?php echo isset($course) ? $course['title'] : ''; ?>"> 
+									<select class="erCourses form-control" id="selected_courses" multiple="multiple">
+										<?php if (isset($enrollment)) : ?>
+												 <option value="<?php echo $enrollment['course_id'] ?>" selected="selected"><?php echo $enrollment['description'] ?></option>
+										<?php endif; ?>
+									</select>
+									<input type="hidden" class="form-control er-form-control" name="enrollment[course_id]" id="courses_selected" readonly="" value="<?php echo isset($enrollment) ? $enrollment['course_id'] : ''; ?>">
 								</div>
 							</div>
 						</div>
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Description</label>
+								<label class="control-label col-sm-2" for="">Year</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[description]" value="<?php echo isset($course) ? $course['description'] : ''; ?>"> 
+									 <select class="form-control" name="enrollment[year]">
+									    <option value="1">1</option>
+									    <option value="2">2</option>
+									    <option value="3">3</option>
+									    <option value="4">4</option>
+									    <option value="5">5</option>
+									  </select>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for=""> </label>
-								
-							</div>
-						</div>
-						
 					</div>
-
-					<?php if (isset($course)) : ?>			
+	
 					<div class="clearfix"></div>
 					<br/><br/>
 
 					<div class="col-sm-9">
-						<h4 class="form-section">Curriculum <a href="<?php echo base_url( 'courses/new' ) ?>" class="btn orange">View Full Curriculum  <i class="fa fa-file-text"></i></a>
-							
-						</h4>
+						<h4 class="form-section">Class Schedules</h4>
 
-						<div class="col-sm-12">
-							<table class="table table-striped table-bordered table-advance table-hover" id="tbl_curriculum" data-source="<?php echo base_url( 'courses_controller/curriculum_listing/' . (isset($course) ? $course['id'] : '0')) ?>"> 
-								<thead>
-									<tr>
-										<th>Year</th>
-										<th>Semester</th>
-										<th>Subjects</th>
-										<th>Total Units</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div>
-						
+						<!-- <form id="enrollSchedule" action="" method="post">
+							<select multiple="multiple" name="duallistbox_enrollSchedule[]">
+								<?php foreach ($schedules as $schedule) :  ?>
+								<option value="<?php echo $schedule->id; ?>">
+									<?php echo $schedule->subject_title; ?>
+									(<?php echo $schedule->units; ?>)
+								</option>
+								<?php endforeach; ?>
+							</select>
+							<br>
+						</form> -->
+
 					</div>
-					<?php endif; ?>
 
 				</div>
 

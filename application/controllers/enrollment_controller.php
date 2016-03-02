@@ -73,10 +73,14 @@ class enrollment_controller extends CI_Controller {
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'enrollment' ];
+				$data_scheds = $_POST['duallistbox_enrollSchedule'];
 
 				$result = $this->enrollment_model->new_enrollment($data);
-				if($result[0]) {
-					
+				
+				if($result[0] || true) {
+
+					$this->enrollment_model->enroll_schedule($result[2], $data_scheds);
+
 					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">' . $result[1] . '</div>' );
 					redirect(base_url($this->uri->segment(1)));	
 				} else {
@@ -127,8 +131,9 @@ class enrollment_controller extends CI_Controller {
 		}
 
 		$data = [ 
-			'title' 	=> 'Update Enrollment',
-			'enrollment'	=> $this->enrollment_model->get_enrollment($id)
+			'title' => 'Update Enrollment',
+			'enrollment' => $this->enrollment_model->get_enrollment($id),
+			'schedules' => $this->enrollment_model->get_enrolled_schedule($id)
 		];
 
 		$this->template
@@ -139,12 +144,27 @@ class enrollment_controller extends CI_Controller {
 			->build('enrollment/enrollment_form', $data);
 	}
 
-	public function delete_enrollment( $id = 0 )
+	public function cancel_enrollment( $id = 0 )
 	{	
 		if( $id > 0 )
 		{
-			$this->enrollment_model->delete_enrollment( $id );
-			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been removed.</div>' );	
+			$this->enrollment_model->cancel_enrollment( $id );
+			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been canceled.</div>' );	
+		}
+		else
+		{
+			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+		}
+		
+		redirect(base_url( $this->uri->segment(1)));
+	}
+
+	public function reenroll( $id = 0 )
+	{	
+		if( $id > 0 )
+		{
+			$this->enrollment_model->reenroll( $id );
+			$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been reserved.</div>' );	
 		}
 		else
 		{
@@ -159,4 +179,5 @@ class enrollment_controller extends CI_Controller {
 		$data = $this->enrollment_model->get_students($_GET['q']);
 		echo json_encode(['items' => $data]);
 	}
+
 }

@@ -4,7 +4,7 @@
 <div class="portlet box grey">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-graduation-cap"></i>Subjects
+			<i class="fa fa-book"></i>Subjects
 		</div>
 
 	</div>

@@ -5,7 +5,7 @@ define ( "ADMIN", "administrator" );
 define ( "REGISTRAR", "registrar" );
 define ( "CASHIER", "cashier" );
 
-define( "RESERVED", 1 );
-define( "ENROLLED", 2 );
-define( "CANCELED", 3 );
+define( "E_RESERVED", 1 );
+define( "E_ENROLLED", 2 );
+define( "E_CANCELED", 3 );
 

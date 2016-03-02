@@ -4,7 +4,7 @@
 <div class="portlet box grey">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-students"></i>Students
+			<i class="fa fa-users"></i>Students
 		</div>
 
 	</div>

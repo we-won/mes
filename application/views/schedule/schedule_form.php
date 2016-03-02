@@ -35,15 +35,15 @@
 
 						<div class="col-sm-12">
 							<div class="form-group">
-								<label class="control-label col-sm-2" for="">Monday <?php echo $time[0]['day']; ?></label>
+								<label class="control-label col-sm-2" for="">Monday</label>
 								<div class="col-sm-2">
-									<input type="text" id="monday" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
+									<input type="text" id="monday" value="<?php if (isset($time) && isset($time) && is_array($time[0])) echo $time[0][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) &&  isset($time) && is_array($time[0])) echo $time[0][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="1" />
+									<input name="day[chk][]" type="checkbox" value="1" <?php if (isset($time) && isset($time) && is_array($time[0])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -52,14 +52,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Tuesday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[1])) echo $time[1][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[1])) echo $time[1][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="2" />
+									<input name="day[chk][]" type="checkbox" value="2" <?php if (isset($time) && is_array($time[1])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -68,14 +67,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Wednesday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[2])) echo $time[2][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[2])) echo $time[2][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="3" />
+									<input name="day[chk][]" type="checkbox" value="3" <?php if (isset($time) && is_array($time[2])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -84,14 +82,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Thursday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[3])) echo $time[3][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[3])) echo $time[3][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="4" />
+									<input name="day[chk][]" type="checkbox" value="4" <?php if (isset($time) && is_array($time[3])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -100,14 +97,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Friday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[4])) echo $time[4][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[4])) echo $time[4][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="5" />
+									<input name="day[chk][]" type="checkbox" value="5" <?php if (isset($time) && is_array($time[4])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -116,14 +112,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Saturday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[5])) echo $time[5][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[5])) echo $time[5][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="6" />
+									<input name="day[chk][]" type="checkbox" value="6" <?php if (isset($time) && is_array($time[5])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>
@@ -132,14 +127,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Sunday</label>
 								<div class="col-sm-2">
-									<input type="text" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
-									
+									<input type="text" id="monday" value="<?php if (isset($time) && is_array($time[6])) echo $time[6][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />
 								</div>
 								<div class="col-sm-2">
-									<input type="text" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
+									<input type="text" value="<?php if (isset($time) && is_array($time[6])) echo $time[6][1]; ?>" name="day[end_time][]" class="timepicker_slider form-control" placeholder="End Time"  />
 								</div>
 								<div class="col-sm-2">
-									<input name="day[chk][]" type="checkbox" value="7" />
+									<input name="day[chk][]" type="checkbox" value="7" <?php if (isset($time) && is_array($time[6])) echo 'checked'; ?> />
 								</div>
 							</div>
 						</div>

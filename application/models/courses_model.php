@@ -33,7 +33,7 @@ class courses_model extends CI_Model
 		$q = $this->db->query("
 			SELECT id, code, title, description, created
 			FROM $this->mes_courses
-			WHERE (code LIKE '%$search%' OR title LIKE '%$search%')
+			WHERE (code LIKE '%$search%' OR title LIKE '%$search%' OR description LIKE '%$search%')
 			AND is_active = 1
 			LIMIT $start, $limit
 		");

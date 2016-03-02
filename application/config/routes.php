@@ -83,4 +83,5 @@ $route['schedule/(:num)/delete'] = "schedule_controller/delete_schedule/$1";
 $route['enrollment'] = "enrollment_controller";
 $route['enrollment/new'] = "enrollment_controller/new_enrollment";
 $route['enrollment/(:num)/edit'] = "enrollment_controller/edit_enrollment/$1";
-$route['enrollment/(:num)/delete'] = "enrollment_controller/delete_enrollment/$1";
+$route['enrollment/(:num)/cancel'] = "enrollment_controller/cancel_enrollment/$1";
+$route['enrollment/(:num)/reenroll'] = "enrollment_controller/reenroll/$1";

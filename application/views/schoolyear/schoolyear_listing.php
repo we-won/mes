@@ -4,7 +4,7 @@
 <div class="portlet box grey">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-users"></i>School Year & Semester
+			<i class="fa fa-database"></i>School Year & Semester
 		</div>
 
 	</div>

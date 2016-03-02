@@ -124,12 +124,43 @@ class schedule_model extends CI_Model
 		return [1, 'Schedule has been added.'];
 	}
 
-	public function update_schedule( $id, $data )
+	public function update_schedule( $id, $data, $day )
 	{
-		$this->db->where( 'id', $id );
+		/*$this->db->where( 'id', $id );
 		$this->db->update( $this->mes_schedule, $data ); 
 
-		return ($this->db->affected_rows() > 0) ? true : false;
+		return ($this->db->affected_rows() > 0) ? true : false;*/
+		
+		$this->db->query("UPDATE mes_schedule SET subject_id = {$data['subject_id']} WHERE id = $id");
+		
+		if ($this->db->_error_number())
+		{
+			return [0, $this->error_msg = $this->db->_error_message()]; 
+		}
+		
+		$this->db->query("DELETE FROM mes_subject_schedule WHERE schedule_id = $id");
+		
+		if ($this->db->_error_number())
+		{
+			return [0, $this->error_msg = $this->db->_error_message()]; 
+		}
+		
+		$sql = "INSERT INTO mes_subject_schedule(schedule_id, day, start_time, end_time) VALUES ";
+		
+		$i = 0;
+		foreach($day['chk'] as $val) {
+			if ($i++ > 0) $sql .= ', ';
+			$sql .= "($id, $val, '{$day['start_time'][$val - 1]}', '{$day['end_time'][$val - 1]}')";
+		}
+		
+		$this->db->query($sql);
+		
+		if ($this->db->_error_number())
+		{
+			return [0, $this->error_msg = $this->db->_error_message()]; 
+		}
+		
+		return [1, 'Schedule has been updated.'];
 	}
 
 	public function delete_schedule( $id )

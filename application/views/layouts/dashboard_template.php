@@ -244,8 +244,11 @@
 <!-- END OF MORE JS -->
 
 <script>
-	App.init();
+	jQuery(document).ready(function() {  
+		App.init();
+	});
 </script>
+
 
 
 </body>

@@ -27,11 +27,13 @@
 								<div class="col-sm-10">
 									<?php if (isset($enrollment)) : ?>
 										<input type="text" disabled class="form-control" value="<?php echo '(' . $enrollment['student_number'] . ') ' . $enrollment['student_name']; ?>">
-										<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="<?php echo $enrollment['student_id']; ?>">
+										<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" readonly="" value="<?php echo $enrollment['student_id']; ?>">
 									<?php else : ?>
 										<select class="erStudents form-control" id="selected_students" multiple="multiple"></select>
 										<input type="hidden" class="form-control er-form-control" name="enrollment[student_id]" id="students_selected" readonly="" value="">
 									<?php endif; ?>
+
+									
 								</div>
 							</div>
 						</div>
@@ -55,11 +57,9 @@
 								<label class="control-label col-sm-2" for="">Year</label>
 								<div class="col-sm-10">
 									 <select class="form-control" name="enrollment[year]">
-									    <option value="1">1</option>
-									    <option value="2">2</option>
-									    <option value="3">3</option>
-									    <option value="4">4</option>
-									    <option value="5">5</option>
+									 	<?php for ($i = 1; $i <= 5; ++$i) : ?>
+									 		<option <?php echo (isset($enrollment) && $enrollment['year'] == $i) ? 'selected' : ''; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+									 	<?php endfor; ?>
 									  </select>
 								</div>
 							</div>
@@ -73,17 +73,17 @@
 					<div class="col-sm-9">
 						<h4 class="form-section">Class Schedules</h4>
 
-						<!-- <form id="enrollSchedule" action="" method="post">
+						<!--<form id="enrollSchedule" action="" method="post">-->
 							<select multiple="multiple" name="duallistbox_enrollSchedule[]">
 								<?php foreach ($schedules as $schedule) :  ?>
-								<option value="<?php echo $schedule->id; ?>">
+								<option <?php echo isset($schedule->selected) ? $schedule->selected : ''; ?> value="<?php echo $schedule->id; ?>">
 									<?php echo $schedule->subject_title; ?>
 									(<?php echo $schedule->units; ?>)
 								</option>
 								<?php endforeach; ?>
 							</select>
 							<br>
-						</form> -->
+						<!--</form>-->
 
 					</div>
 

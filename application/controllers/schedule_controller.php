@@ -7,7 +7,7 @@ class schedule_controller extends CI_Controller {
 		# code...
 		parent::__construct();
 
-		$this->load->model(['schedule_model']);
+		$this->load->model(['schedule_model', 'schoolyear_model']);
 	}
 
 
@@ -17,8 +17,12 @@ class schedule_controller extends CI_Controller {
 			redirect('/');
 		}
 		
+		$sy_info = $this->schoolyear_model->get_active_sy();
+
 		$data = [ 
-			'title' => ucwords( $this->uri->segment(1) )
+			'title' => ucwords( $this->uri->segment(1) ),
+			'sy' => $sy_info['year'],
+			'sem' => $sy_info['sem']
 		];
 
 		$this->template
@@ -100,14 +104,15 @@ class schedule_controller extends CI_Controller {
 
 		if (isset($_POST[ 'schedule' ])) {
 			$this->form_validation->set_rules('schedule[subject_id]', 'Subject', 'required');
-			$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
-			$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
+			//$this->form_validation->set_rules('schedule[days]', 'Days', 'required');
+			//$this->form_validation->set_rules('schedule[time]', 'Time', 'required');
 			
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'schedule' ];
+				$day = $_POST[ 'day' ];
 
-				if($this->schedule_model->update_schedule($id, $data)) {
+				if($this->schedule_model->update_schedule($id, $data, $day)) {
 					
 					$this->nativesession->set_flashdata( '_schedule', '<div class="alert alert-success">Schedule has been updated.</div>' );
 					redirect(base_url( $this->uri->segment(1)));
@@ -118,11 +123,18 @@ class schedule_controller extends CI_Controller {
 			}
 
 		}
-
+		
+		$time = $this->schedule_model->get_schedule_time($id);
+		$sched = [0, 0, 0, 0, 0, 0, 0];
+		
+		foreach($time as $val) {
+			$sched[$val['day'] - 1] = [$val['start_time'], $val['end_time']];
+		}
+		
 		$data = [ 
 			'title' => 'Update Schedule',
 			'schedule'	=> $this->schedule_model->get_schedule($id),
-			'time' => $this->schedule_model->get_schedule_time($id)
+			'time' => $sched
 		];
 
 		$this->template

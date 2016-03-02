@@ -5,6 +5,11 @@
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="fa fa-calendar-plus-o"></i>Schedule
+			<?php $sem_w = ''; 
+				if ($sem == 1) $sem_w = '1st Sem'; 
+				elseif ($sem == 2) $sem_w = '2nd Sem'; 
+				else $sem_w = 'summer'; ?>
+			[<small><?php echo $sy . ' - ' . ($sy + 1) . ' : ' . $sem_w; ?></small>]
 		</div>
 
 	</div>

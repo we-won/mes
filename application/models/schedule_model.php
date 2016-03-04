@@ -13,6 +13,8 @@ class schedule_model extends CI_Model
 		parent::__construct();		
 		$this->error_no = 0;
 		$this->error_msg = '';
+
+		$this->load->model('schoolyear_model');
 	}
 
 	public function get_schedule( $schedule_id = 0 )
@@ -20,9 +22,11 @@ class schedule_model extends CI_Model
 		if ($schedule_id == 0) return false;
 
 		$q = $this->db->query("
-			SELECT a.subject_id, b.description 
+			SELECT a.subject_id, a.course_id, b.description,
+			c.description as course_description
 			FROM $this->mes_schedule a
 			LEFT JOIN mes_subjects b ON a.subject_id = b.id
+			LEFT JOIN mes_courses c ON a.course_id = c.id
 			WHERE a.id = $schedule_id
 			LIMIT 1
 		");
@@ -53,16 +57,19 @@ class schedule_model extends CI_Model
 			AND a.is_active <> 0
 			LIMIT $start, $limit
 		");*/
+
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
 		
 		$q = $this->db->query("
-			SELECT a.id, b.title as subject_name, 
+			SELECT a.id, b.title as subject_name, b.description as subject_description, 
 			GROUP_CONCAT(d.code1, '(', c.start_time, ' - ', c.end_time, ')' ORDER BY c.day SEPARATOR ', ') as schedule 
 			FROM mes_schedule a 
 			LEFT JOIN mes_subjects b ON a.subject_id = b.id 
 			LEFT JOIN mes_subject_schedule c ON c.schedule_id = a.id 
 			LEFT JOIN mes_days d ON d.id = c.day
 			AND a.is_active <> 0 
-			WHERE b.title LIKE '%$search%' 
+			WHERE b.title LIKE '%$search%'
+			AND a.schoolyear_id = $sy_id 
 			GROUP BY a.id 
 			LIMIT $start, $limit
 		");
@@ -93,10 +100,11 @@ class schedule_model extends CI_Model
 		{
 			return [0, $this->error_msg = $this->db->_error_message()]; 
 		}*/
-		
+		$course_id = $data['course_id'] ? $data['course_id'] : 'null';
+
 		$this->db->query("
-			INSERT INTO mes_schedule(schoolyear_id, subject_id) 
-			VALUES((SELECT id FROM mes_schoolyear WHERE is_active = 1), {$data['subject_id']}) 
+			INSERT INTO mes_schedule(schoolyear_id, subject_id, course_id) 
+			VALUES((SELECT id FROM mes_schoolyear WHERE is_active = 1), {$data['subject_id']}, $course_id) 
 		");
 
 		if ($this->db->_error_number())
@@ -131,7 +139,9 @@ class schedule_model extends CI_Model
 
 		return ($this->db->affected_rows() > 0) ? true : false;*/
 		
-		$this->db->query("UPDATE mes_schedule SET subject_id = {$data['subject_id']} WHERE id = $id");
+		$course_id = $data['course_id'] ? $data['course_id'] : 'null';
+
+		$this->db->query("UPDATE mes_schedule SET subject_id = {$data['subject_id']}, course_id = $course_id WHERE id = $id");
 		
 		if ($this->db->_error_number())
 		{

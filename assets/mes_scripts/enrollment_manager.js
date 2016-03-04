@@ -99,9 +99,12 @@ var Enrollment = (function()
 
     Enrollment.prototype.init_student_select2 = function(maxLength)
     {
+        var count = 0;
         function formatStudentRepoSelection (repo) {
           $('#students_selected').val( $("#selected_students").val() );
           
+          count++;
+
           if (repo.number) 
             return '(' + repo.number + ') ' + repo.lastname + ', ' + repo.firstname + ' ' + repo.middlename[0];
           else 
@@ -154,11 +157,19 @@ var Enrollment = (function()
             templateSelection: formatStudentRepoSelection
         });
         
-        $(document).on('click', ".select2-selection__choice__remove", function() {
+        $(".erStudents").on("select2:unselect", function (e) {  
+            count--;
+            
+            if (count == 0) {
+                $('#students_selected').attr('value', ''); 
+            }
+        });
+
+        /*$(document).on('click', ".select2-selection__choice__remove", function() {
             if ($('.select2-selection__choice').length == 0) {
                $('#students_selected').attr('value', '');
             }
-        });
+        });*/
     }
 
 	return Enrollment;

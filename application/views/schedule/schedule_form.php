@@ -35,6 +35,20 @@
 
 						<div class="col-sm-12">
 							<div class="form-group">
+								<label class="control-label col-sm-2" for="">Recommended Course</label>
+								<div class="col-sm-10">
+									<select class="erCourses form-control" id="selected_courses" multiple="multiple">
+										<?php if (isset($schedule) && $schedule['course_id']) : ?>
+												<option value="<?php echo $schedule['course_id'] ?>" selected="selected"><?php echo $schedule['course_description'] ?></option>
+										<?php endif; ?>
+									</select>
+									<input type="hidden" class="form-control er-form-control" name="schedule[course_id]" id="courses_selected" readonly="" value="<?php echo isset($schedule) ? $schedule['course_id'] : ''; ?>">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Monday</label>
 								<div class="col-sm-2">
 									<input type="text" id="monday" value="<?php if (isset($time) && isset($time) && is_array($time[0])) echo $time[0][0]; ?>" name="day[start_time][]" class="timepicker_slider form-control" placeholder="Start Time" />

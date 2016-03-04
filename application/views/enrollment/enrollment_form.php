@@ -77,8 +77,9 @@
 							<select multiple="multiple" name="duallistbox_enrollSchedule[]">
 								<?php foreach ($schedules as $schedule) :  ?>
 								<option <?php echo isset($schedule->selected) ? $schedule->selected : ''; ?> value="<?php echo $schedule->id; ?>">
+									<!-- (<?php echo $schedule->units; ?>) -->
 									<?php echo $schedule->subject_title; ?>
-									(<?php echo $schedule->units; ?>)
+									- <?php echo $schedule->schedule; ?>
 								</option>
 								<?php endforeach; ?>
 							</select>

@@ -86,6 +86,9 @@ class enrollment_model extends CI_Model
 	{
 		$data = array();
 
+		$this->db->where( 'enrollment_id', $id );
+		$this->db->delete( 'mes_enrollment_schedule' ); 
+
 		foreach ($scheds as $sched) {
 			$data[] = [
 				'enrollment_id' => $id,
@@ -108,7 +111,7 @@ class enrollment_model extends CI_Model
 		$this->db->where( 'id', $id );
 		$this->db->update( $this->mes_enrollment, $data ); 
 
-		return ($this->db->affected_rows() > 0) ? true : false;
+		return ($this->db->_error_number() <= 0) ? true : false;
 	}
 
 	public function cancel_enrollment( $id )
@@ -151,7 +154,7 @@ class enrollment_model extends CI_Model
 	public function get_enrolled_schedule($id)
 	{
 		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
-
+/*
 		$q = $this->db->query("
 			SELECT a.id, a.schoolyear_id, a.subject_id,
 			b.title as subject_title, b.units, IF ( c.id IS NOT NULL, 'selected', '' ) as selected
@@ -160,6 +163,20 @@ class enrollment_model extends CI_Model
 			LEFT JOIN mes_enrollment_schedule c ON c.schedule_id = a.id AND c.enrollment_id = $id 
 			WHERE a.schoolyear_id = $sy_id
 			AND a.is_active = 1
+		");*/
+
+		$q = $this->db->query("
+			SELECT a.id, b.title as subject_title, b.description as subject_description, b.units,
+			GROUP_CONCAT(d.code1, '(', c.start_time, ' - ', c.end_time, ')' ORDER BY c.day SEPARATOR ', ') as schedule,
+			IF ( e.id IS NOT NULL, 'selected', '' ) as selected
+			FROM mes_schedule a 
+			LEFT JOIN mes_subjects b ON a.subject_id = b.id 
+			LEFT JOIN mes_subject_schedule c ON c.schedule_id = a.id 
+			LEFT JOIN mes_days d ON d.id = c.day
+			LEFT JOIN mes_enrollment_schedule e ON e.schedule_id = a.id AND e.enrollment_id = $id 
+			AND a.is_active <> 0 
+			AND a.schoolyear_id = $sy_id 
+			GROUP BY a.id
 		");
 		
 		return $q->result();

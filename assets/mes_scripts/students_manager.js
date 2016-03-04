@@ -82,9 +82,12 @@ var Students = (function()
 
     Students.prototype.init_student_select2 = function(maxLength)
     {
+        var count = 0;
         function formatStudentRepoSelection (repo) {
           $('#students_selected').val( $("#selected_students").val() );
 
+          count++;
+          
           return '(' + repo.number + ') ' + repo.lastname + ', ' + repo.firstname + ', ' + repo.middlename[0] || repo.text;
         }
 
@@ -134,9 +137,11 @@ var Students = (function()
             templateSelection: formatStudentRepoSelection
         });
         
-        $(document).on('click', ".select2-selection__choice__remove", function() {
-            if ($('.select2-selection__choice').length == 0) {
-               $('#students_selected').attr('value', '');
+         $(".erStudents").on("select2:unselect", function (e) {  
+            count--;
+            
+            if (count == 0) {
+                $('#students_selected').attr('value', ''); 
             }
         });
     }

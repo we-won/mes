@@ -117,9 +117,12 @@ class enrollment_controller extends CI_Controller {
 			if ($this->form_validation->run() != FALSE) {
 				
 				$data = $_POST[ 'enrollment' ];
+				$data_scheds = $_POST['duallistbox_enrollSchedule'];
 
 				if($this->enrollment_model->update_enrollment($id, $data)) {
 					
+					$this->enrollment_model->enroll_schedule($id, $data_scheds);
+
 					$this->nativesession->set_flashdata( '_enrollment', '<div class="alert alert-success">Enrollment has been updated.</div>' );
 					redirect(base_url( $this->uri->segment(1)));
 				} else {

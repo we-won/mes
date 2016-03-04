@@ -201,8 +201,11 @@ var Courses = (function()
 
     Courses.prototype.init_course_select2 = function(maxLength)
     {
+        var count = 0;
         function formatCourseRepoSelection (repo) {
           $('#courses_selected').val( $("#selected_courses").val() );
+
+          count++;
 
           return repo.description || repo.text;
         }
@@ -252,12 +255,20 @@ var Courses = (function()
             templateResult: formatCourseRepo,
             templateSelection: formatCourseRepoSelection
         });
+
+        $(".erCourses").on("select2:unselect", function (e) {  
+            count--;
+            
+            if (count == 0) {
+                $('#courses_selected').attr('value', ''); 
+            }
+        });
         
-        $(document).on('click', ".select2-selection__choice__remove", function() {
+        /*$(document).on('click', ".select2-selection__choice__remove", function() {
             if ($('.select2-selection__choice').length == 0) {
                $('#courses_selected').attr('value', '');
             }
-        });
+        });*/
     }
 
 	return Courses;

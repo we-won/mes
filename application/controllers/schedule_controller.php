@@ -50,7 +50,7 @@ class schedule_controller extends CI_Controller {
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
-	 		'subject_name',
+	 		'subject_description',
 	 		'schedule',
 	 		'@view:schedule/datatables/action'
 	 	] );

@@ -10,6 +10,7 @@
 
 <script src="<?php echo asset_url() ?>mes_scripts/schedule_manager.js"></script>
 <script src="<?php echo asset_url() ?>mes_scripts/subjects_manager.js"></script>
+<script src="<?php echo asset_url() ?>mes_scripts/courses_manager.js"></script>
 
 <script>
 	var schedule;
@@ -24,5 +25,8 @@
 	   schedule.add_schedule();
 
 	   subjects.init_subject_select2(1);
+
+	   courses = new Courses();
+	   courses.init_course_select2(1);
 	});
 </script>

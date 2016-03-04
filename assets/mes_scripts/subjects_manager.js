@@ -82,9 +82,12 @@ var Subjects = (function()
 
     Subjects.prototype.init_subject_select2 = function(maxLength)
     {
+        var count = 0;
         function formatSubjectRepoSelection (repo) {
           $('#subjects_selected').val( $("#selected_subjects").val() );
 
+          count++;
+          
           return repo.description || repo.text;
         }
 
@@ -133,12 +136,20 @@ var Subjects = (function()
             templateResult: formatSubjectRepo,
             templateSelection: formatSubjectRepoSelection
         });
+
+        $(".erSubjects").on("select2:unselect", function (e) {  
+            count--;
+            
+            if (count == 0) {
+                $('#subjects_selected').attr('value', ''); 
+            }
+        });
         
-        $(document).on('click', ".select2-selection__choice__remove", function() {
+        /*$(document).on('click', ".select2-selection__choice__remove", function() {
             if ($('.select2-selection__choice').length == 0) {
                $('#subjects_selected').attr('value', '');
             }
-        });
+        });*/
     }
 
 	return Subjects;

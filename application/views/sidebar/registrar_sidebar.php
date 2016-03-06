@@ -16,7 +16,7 @@
 
 <li class="<?php echo ($this->uri->segment(1) == 'enrollment' ? 'start active ' : '' ) ?>">
 	<a href="<?php echo base_url( '/enrollment') ?>">
-		<i class="fa fa-edge"></i>
+		<i class="fa fa-user-plus"></i>
 		<span class="title">Enroll</span>
 		<span class="selected"></span>
 	</a>

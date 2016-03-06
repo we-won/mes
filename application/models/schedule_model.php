@@ -48,16 +48,6 @@ class schedule_model extends CI_Model
 	
 	public function get_schedule_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
-		/*$q = $this->db->query("
-			SELECT a.subject_id, a.days, a.time, a.created, a.is_active,
-			b.title as subject_name
-			FROM $this->mes_schedule a
-			LEFT JOIN mes_subjects b ON a.subject_id = b.id
-			WHERE b.title LIKE '%$search%'
-			AND a.is_active <> 0
-			LIMIT $start, $limit
-		");*/
-
 		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
 		
 		$q = $this->db->query("
@@ -92,14 +82,6 @@ class schedule_model extends CI_Model
 
 	public function create_schedule( $data, $day )
 	{
-		/*$data['created'] = date("Y-m-d H:i:s");
-
-		$this->db->insert( $this->mes_schedule, $data ); 
-
-		if ($this->db->_error_number())
-		{
-			return [0, $this->error_msg = $this->db->_error_message()]; 
-		}*/
 		$course_id = $data['course_id'] ? $data['course_id'] : 'null';
 
 		$this->db->query("
@@ -134,11 +116,6 @@ class schedule_model extends CI_Model
 
 	public function update_schedule( $id, $data, $day )
 	{
-		/*$this->db->where( 'id', $id );
-		$this->db->update( $this->mes_schedule, $data ); 
-
-		return ($this->db->affected_rows() > 0) ? true : false;*/
-		
 		$course_id = $data['course_id'] ? $data['course_id'] : 'null';
 
 		$this->db->query("UPDATE mes_schedule SET subject_id = {$data['subject_id']}, course_id = $course_id WHERE id = $id");
@@ -200,7 +177,23 @@ class schedule_model extends CI_Model
 		");
 		
 		return $q->result();
-	
 	}
 
+	public function get_recommended_schedule($course_id, $year)
+	{
+		$sy_info = $this->schoolyear_model->get_active_sy();
+		$sy_id = $sy_info['id'];
+		$sy_sem = $sy_info['sem'];
+
+		$q = $this->db->query("
+			SELECT a.id
+			FROM mes_schedule a 
+			LEFT JOIN mes_curriculum b ON a.course_id = b.course_id AND a.subject_id = b.subject_id
+			WHERE a.course_id = $course_id
+			AND b.year = $year AND b.semester = $sy_sem
+			AND a.schoolyear_id = $sy_id
+		");
+
+		return $q->result_array();
+	}
 }

@@ -92,7 +92,8 @@ class enrollment_controller extends CI_Controller {
 
 		$data = [ 
 			'title' => 'New Enrollment',
-			'schedules' => $this->schedule_model->get_sy_schedules()
+			'schedules' => $this->schedule_model->get_sy_schedules(),
+			'new' => true
 		];
 
 		

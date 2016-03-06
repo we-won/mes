@@ -154,16 +154,6 @@ class enrollment_model extends CI_Model
 	public function get_enrolled_schedule($id)
 	{
 		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
-/*
-		$q = $this->db->query("
-			SELECT a.id, a.schoolyear_id, a.subject_id,
-			b.title as subject_title, b.units, IF ( c.id IS NOT NULL, 'selected', '' ) as selected
-			FROM mes_schedule a
-			LEFT JOIN mes_subjects b ON a.subject_id = b.id
-			LEFT JOIN mes_enrollment_schedule c ON c.schedule_id = a.id AND c.enrollment_id = $id 
-			WHERE a.schoolyear_id = $sy_id
-			AND a.is_active = 1
-		");*/
 
 		$q = $this->db->query("
 			SELECT a.id, b.title as subject_title, b.description as subject_description, b.units,

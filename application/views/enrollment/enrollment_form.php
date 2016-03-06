@@ -42,7 +42,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Course</label>
 								<div class="col-sm-10">
-									<select class="erCourses form-control" id="selected_courses" multiple="multiple">
+									<select class="erCourses <?php echo isset($new) ? 'enrollment-course-select2' : ''; ?> form-control" id="selected_courses" multiple="multiple">
 										<?php if (isset($enrollment)) : ?>
 												<option value="<?php echo $enrollment['course_id'] ?>" selected="selected"><?php echo $enrollment['course_description'] ?></option>
 										<?php endif; ?>
@@ -56,7 +56,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Year</label>
 								<div class="col-sm-10">
-									 <select class="form-control" name="enrollment[year]">
+									 <select class="form-control" name="enrollment[year]" id="<?php echo isset($new) ? 'enrollment-year-select' : ''; ?>">
 									 	<?php for ($i = 1; $i <= 5; ++$i) : ?>
 									 		<option <?php echo (isset($enrollment) && $enrollment['year'] == $i) ? 'selected' : ''; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
 									 	<?php endfor; ?>
@@ -74,10 +74,9 @@
 						<h4 class="form-section">Class Schedules</h4>
 
 						<!--<form id="enrollSchedule" action="" method="post">-->
-							<select multiple="multiple" name="duallistbox_enrollSchedule[]">
+							<select multiple="multiple" name="duallistbox_enrollSchedule[]" id="enrollment-schedule-duallistbox">
 								<?php foreach ($schedules as $schedule) :  ?>
-								<option <?php echo isset($schedule->selected) ? $schedule->selected : ''; ?> value="<?php echo $schedule->id; ?>">
-									<!-- (<?php echo $schedule->units; ?>) -->
+								<option <?php echo isset($schedule->selected) ? $schedule->selected : ''; ?> value="<?php echo $schedule->id; ?>" id="<?php echo $schedule->id; ?>" class="enrollment_subject_schedule">
 									<?php echo $schedule->subject_title; ?>
 									- <?php echo $schedule->schedule; ?>
 								</option>

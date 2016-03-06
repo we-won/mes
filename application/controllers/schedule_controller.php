@@ -160,4 +160,17 @@ class schedule_controller extends CI_Controller {
 		redirect(base_url( $this->uri->segment(1)));
 	}
 
+	public function get_recommended_schedule()
+	{
+		if (!isset($_POST['course_id']) || !isset($_POST['year']))
+		{
+			return false;
+		}
+
+		$result = $this->schedule_model->get_recommended_schedule($_POST['course_id'], $_POST['year']);
+		echo json_encode($result);
+
+		return;
+	}
+
 }

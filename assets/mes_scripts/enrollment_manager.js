@@ -83,17 +83,29 @@ var Enrollment = (function()
     Enrollment.prototype.init_enroll_schedule = function()
     {
         $('select[name="duallistbox_enrollSchedule[]"]').bootstrapDualListbox();
-        
-       /* $("#testfunction").click(function(e) {
-            e.preventDefault();
 
-            var subjects = $('[name="duallistbox_enrollSchedule[]"]').val();
-            
-            console.log(subjects);
+        $(".enrollment-course-select2").on("select2:select", function (e) {  
+            get_r_sched();
+        });
 
-            return false;
-        });*/
+        $( "#enrollment-year-select" ).change(function() {
+            get_r_sched();
+        });
 
+        function get_r_sched() {
+            var course_id = $('#courses_selected').val();
+            var year = $('#enrollment-year-select').val();
+
+            $.post('/mes/schedule_controller/get_recommended_schedule', { course_id: course_id, year: year }, function (data){
+                $('.enrollment_subject_schedule').removeAttr('selected');
+
+                for (var i = 0; i < data.length; i++) {
+                    $('.enrollment_subject_schedule[id="' + data[i].id + '"]').attr('selected', true);
+                }
+
+                $("#enrollment-schedule-duallistbox").bootstrapDualListbox('refresh', true);
+            }, 'json');
+        }
       
     }
 

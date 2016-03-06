@@ -4,7 +4,7 @@
 <div class="portlet box grey">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-edge"></i>Enrollment 
+			<i class="fa fa-user-plus"></i>Enrollment 
 			<?php $sem_w = ''; 
 				if ($sem == 1) $sem_w = '1st Sem'; 
 				elseif ($sem == 2) $sem_w = '2nd Sem'; 

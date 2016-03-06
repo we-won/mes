@@ -163,7 +163,7 @@
 					<h3 class="page-title">
 					<?php echo ( isset($title) ? $title : '' ) ?> <small><?php echo ( isset($subtitle) ? $subtitle : '' ) ?></small>
 					</h3>
-					<ul class="page-breadcrumb breadcrumb">
+					<ul class="page-breadcrumb breadcrumb hidden">
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="<?php echo base_url( '/dashboard') ?>">Home</a>

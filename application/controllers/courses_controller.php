@@ -117,7 +117,6 @@ class courses_controller extends CI_Controller {
 					$this->nativesession->set_flashdata( '_courses', '<div class="alert alert-danger">Unable to update course, please try again.</div>' );	
 				}
 			}
-
 		}
 
 		$data = [ 
@@ -129,7 +128,7 @@ class courses_controller extends CI_Controller {
 			->set_partial('more_css', 'scripts/course_form_css')
 			->set_partial('more_js', 'scripts/course_form_js')
 			->set_partial('sidebar', 'sidebar/dashboard_sidebar')
-			->set_partial('curriculum_edit_modal', 'modals/curriculum_edit_modal')
+			->set_partial('curriculum_edit_modal', 'modals/mes_sm_modal')
 			->set_layout('dashboard_template')
 			->build('courses/course_form', $data);
 	}

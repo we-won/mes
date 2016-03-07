@@ -166,8 +166,8 @@ var Courses = (function()
             
             $('#curriculumEditForm').html('loading...');
 
-            $('#mesCurriculumEditModal').modal({backdrop: 'static'});
-            $('#mesCurriculumEditModal .modal-content').load('/mes/courses_controller/edit_curriculum/', {'course' : course, 'year' : year, 'sem' : sem}, function(data) {
+            $('#mesSmModal').modal({backdrop: 'static'});
+            $('#mesSmModal .modal-content').load('/mes/courses_controller/edit_curriculum/', {'course' : course, 'year' : year, 'sem' : sem}, function(data) {
                 
                 var curriculumEdit = $('select[name="duallistbox_curriculumEdit[]"]').bootstrapDualListbox();
                 
@@ -187,6 +187,7 @@ var Courses = (function()
                        
                         _obj.init_curriculum_listing();
                         $('#save-curriculum-button').button('reset');
+                         $('#mesSmModal').modal('hide');
                     });
 
                     return false;
@@ -269,6 +270,116 @@ var Courses = (function()
                $('#courses_selected').attr('value', '');
             }
         });*/
+    }
+
+     Courses.prototype.init_sections_listing = function()
+    {
+        if (!jQuery().dataTable) {
+            alert('error');
+            return;
+        }
+            $("#tbl_sections").dataTable().fnDestroy();
+
+            // begin first table
+            $('#tbl_sections').dataTable({
+                "sDom" : "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", //default layout without horizontal scroll(remove this setting to enable horizontal scroll for the table)
+                "aLengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"] // change per page values here
+                ],
+                "bProcessing": true,
+                "bServerSide": true,
+                "bPaginate": false,
+                "bFilter": false,
+                "sAjaxSource": $('table#tbl_sections').data('source'),
+                // set the initial value
+                "iDisplayLength": 10,
+                "sPaginationType": "bootstrap_full_number",
+                "oLanguage": {
+                    "sProcessing": '<i class="fa fa-coffee"></i>&nbsp;Please wait...',
+                    "sLengthMenu": "_MENU_ records",
+                    "oPaginate": {
+                        "sPrevious": "Prev",
+                        "sNext": "Next"
+                    }
+                },
+                "aoColumnDefs": [{
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ],
+                "fnInitComplete": function(oSettings, json) {
+
+                    if (jQuery(".fancybox-button").size() > 0) {
+                        jQuery(".fancybox-button").fancybox({
+                            groupAttr: 'data-rel',
+                            prevEffect: 'none',
+                            nextEffect: 'none',
+                            closeBtn: true,
+                            helpers: {
+                                title: {
+                                    type: 'inside'
+                                }
+                            }
+                        });
+                    }
+
+                },
+            });
+
+
+            jQuery('#tbl_sections_wrapper .dataTables_filter input').addClass("form-control input-medium"); // modify table search input
+            jQuery('#tbl_sections_wrapper .dataTables_length select').addClass("form-control input-small"); // modify table per page dropdown
+
+            // handle record edit/remove
+            $('body').on('click', '#tbl_sections_wrapper .btn-editable', function() {
+                alert('Edit record with id:' + $(this).attr("data-id"));
+            });
+
+            $('body').on('click', '.btn-removable', function() {
+                var msg = $(this).data('message');
+                var url = $(this).data('url');
+                     bootbox.confirm(msg, function(result) {
+                     if(result){
+                        window.location.replace(url);
+                    }
+                }); 
+
+            });
+    }
+
+    Courses.prototype.handle_edit_sections = function() 
+    {
+        $('body').on('click', '.mesEditSections', function(){
+
+            var course = $(this).attr('data-course');
+            var year = $(this).attr('data-year');
+            var sem = $(this).attr('data-sem');
+            
+            $('#sectionsEditForm').html('loading...');
+
+            $('#mesSmModal').modal({backdrop: 'static'});
+            $('#mesSmModal .modal-content').load('/mes/courses_controller/edit_section/', {'course' : course, 'year' : year, 'sem' : sem}, function(data) {
+                
+                $("#sectionEditForm").submit(function() {
+
+                    $('#save-section-button').button('loading');
+                    
+                    $.post('/mes/courses_controller/save_section/', {'course' : course, 'year' : year, 'sem' : sem, 'subjects' : subjects}, function(data) {
+                       
+                        _obj.init_section_listing();
+                        $('#save-section-button').button('reset');
+                         $('#mesSmModal').modal('hide');
+                    });
+
+                    return false;
+                });
+            });
+
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+        });
     }
 
 	return Courses;

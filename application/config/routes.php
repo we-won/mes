@@ -85,3 +85,6 @@ $route['enrollment/new'] = "enrollment_controller/new_enrollment";
 $route['enrollment/(:num)/edit'] = "enrollment_controller/edit_enrollment/$1";
 $route['enrollment/(:num)/cancel'] = "enrollment_controller/cancel_enrollment/$1";
 $route['enrollment/(:num)/reenroll'] = "enrollment_controller/reenroll/$1";
+
+$route['sections'] = "sections_controller";
+$route['sections/(:num)/manage'] = "sections_controller/manage_sections/$1";

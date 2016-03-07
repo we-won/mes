@@ -6,6 +6,14 @@
 	</a>
 </li>
 
+<li class="<?php echo ($this->uri->segment(1) == 'sections' ? 'start active ' : '' ) ?>">
+	<a href="<?php echo base_url( '/sections') ?>">
+		<i class="fa fa-list-alt"></i>
+		<span class="title">Sections</span>
+		<span class="selected"></span>
+	</a>
+</li>
+
 <li class="<?php echo ($this->uri->segment(1) == 'schedule' ? 'start active ' : '' ) ?>">
 	<a href="<?php echo base_url( '/schedule') ?>">
 		<i class="fa fa-calendar-plus-o"></i>

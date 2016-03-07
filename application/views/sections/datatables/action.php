@@ -1,0 +1,1 @@
+<a href="<?php echo base_url( 'courses/' . $id . '/edit'  ) ?>" class="btn btn-xs  btn-info"><i class="fa fa-pencil" ></i> Manage section</a>

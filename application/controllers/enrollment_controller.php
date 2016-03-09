@@ -39,12 +39,14 @@ class enrollment_controller extends CI_Controller {
 		
 		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
 
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
 		echo $this->datatables->make( [
 	 		'model_loc' 		=> 'enrollment_model',
 	 		'model' 			=> 'enrollment_model',
 	 		'func_get'			=> 'get_enrollment_list',
 	 		'func_get_max'		=> 'get_max_enrollment_pages',
-	 		'where'				=> '',
+	 		'where'				=> [ 'sy_id' => $sy_id ],
 	 		'search' 			=> $search,
 	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],

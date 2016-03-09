@@ -13,6 +13,8 @@ class sections_model extends CI_Model
 		parent::__construct();		
 		$this->error_no = 0;
 		$this->error_msg = '';
+
+		$this->load->model(['schoolyear_model']);
 	}
 
 	public function get_section( $id = 0 )
@@ -31,10 +33,13 @@ class sections_model extends CI_Model
 	public function get_sections_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
 		$q = $this->db->query("
-			SELECT id, code, title, description, created
-			FROM $this->mes_sections
-			WHERE (code LIKE '%$search%' OR title LIKE '%$search%' OR description LIKE '%$search%')
-			AND is_active = 1
+			SELECT a.id, a.sy_id, a.course_id, a.year, a.code, a.limit,
+			CONCAT (b.title, a.year, a.code) as section
+			FROM $this->mes_sections a
+			LEFT JOIN mes_courses b ON a.course_id = b.id
+			WHERE a.is_active = 1
+			AND a.sy_id = ". $where['sy_id'] ."
+			AND a.course_id = ". $where['course_id'] ."
 			LIMIT $start, $limit
 		");
 		
@@ -42,11 +47,13 @@ class sections_model extends CI_Model
 	}
 
 
-	public function get_max_sections_pages( $search = null, $where = null )
+	public function get_max_sections_list( $search = null, $where = null )
 	{
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_sections
 			WHERE is_active = 1
+			AND sy_id = ". $where['sy_id'] ."
+			AND course_id = ". $where['course_id'] ."
 		");
 		
 		$return = $q->row_array()['count'];

@@ -7,7 +7,7 @@ class sections_controller extends CI_Controller {
 		# code...
 		parent::__construct();
 
-		$this->load->model(['courses_model', 'sections_model']);
+		$this->load->model(['courses_model', 'sections_model', 'schoolyear_model']);
 	}
 
 
@@ -17,8 +17,12 @@ class sections_controller extends CI_Controller {
 			redirect('/');
 		}
 
+		$sy_info = $this->schoolyear_model->get_active_sy();
+
 		$data = [ 
-			'title' => ucwords( $this->uri->segment(1) )
+			'title' => ucwords( $this->uri->segment(1) ),
+			'sy' => $sy_info['year'],
+			'sem' => $sy_info['sem']
 		];
 
 		$this->template
@@ -54,10 +58,11 @@ class sections_controller extends CI_Controller {
 	 	] );
 	}
 
-	public function manage_sections()
+	public function manage_sections($course_id = 0)
 	{	
 		$data = [ 
-			'title' => 'Manage Course Sections'
+			'title' => 'Manage Course Sections',
+			'course' => $this->courses_model->get_course($course_id)
 		];
 
 		$this->template
@@ -75,30 +80,58 @@ class sections_controller extends CI_Controller {
 		
 		$search = isset( $_GET['sSearch'] ) ? $_GET['sSearch'] : '';
 
+		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
+
 		echo $this->datatables->make( [
 	 		'model_loc' 		=> 'sections_model',
 	 		'model' 			=> 'sections_model',
 	 		'func_get'			=> 'get_sections_list',
 	 		'func_get_max'		=> 'get_max_sections_list',
-	 		'where'				=> [ 'course_id' => $course_id ],
+	 		'where'				=> [ 'course_id' => $course_id, 'sy_id' => $sy_id ],
 	 		'search' 			=> $search,
 	 		'iDisplayLength' 	=> $_GET['iDisplayLength'],
 	 		'iDisplayStart' 	=> $_GET['iDisplayStart'],
 	 		'sEcho'				=> $_GET['sEcho']
 	 	], [ 
+	 		'section',
 	 		'year',
-	 		'semester',
-	 		'total_subjects',
-	 		'total_units',
+	 		'code',
+	 		'limit',
+	 		'limit',
 	 		'@view:sections/datatables/sections_list_action'
 	 	] );
 	}
 
-	public function new_section($id = 0)
+	public function new_section()
 	{
+		if (!(isset($_POST['course']))) return false;
+
+		$data = [
+			'title' => 'New Section',
+			'course' => $this->courses_model->get_course($_POST['course'])
+		];
+
+		echo $this->load->view('modals/sections_modal_data', compact('data'), TRUE);
 	}
 
-	public function edit_section($id = 0)
+	public function save_section()
+	{
+		if (!(isset($_POST['year'])) || !(isset($_POST['code'])) || !(isset($_POST['course'])) || !(isset($_POST['limit']))) return false;
+
+		$sy_info = $this->schoolyear_model->get_active_sy();
+
+		$data = [
+			'sy_id' => $sy_info['id'],
+			'course_id' => $_POST['course'],
+			'year' => $_POST['year'],
+			'code' => $_POST['code'],
+			'limit' => $_POST['limit']
+		];
+
+		echo json_encode($this->sections_model->create_section($data));
+	}
+
+	public function edit_section()
 	{
 		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course']))) return false;
 

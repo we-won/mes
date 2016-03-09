@@ -348,6 +348,67 @@ var Courses = (function()
             });
     }
 
+    Courses.prototype.section_form_init = function(event)
+    {
+        function the_thing() {
+            var year = $(event).find('select[name="section[year]"]').val();
+            var code = $(event).find('select[name="section[section]"]').val();
+            var title = $(event).find('input#course-title').val();
+
+            $(event).find('input#section-name').val(title + "" + year + "" + code);
+        }
+        
+        the_thing();
+
+        $(event).find('select[name="section[year]"]').change(function() {
+            the_thing();
+        });
+
+        $(event).find('select[name="section[section]"]').change(function() {
+            the_thing();
+        });
+    }
+
+    Courses.prototype.handle_new_sections = function() 
+    {
+        $('body').on('click', '#new-section', function(e){
+
+            var course = $(this).attr('data-course');
+            
+            $('#sectionsEditForm').html('loading...');
+
+            $('#mesSmModal').modal({backdrop: 'static'});
+            $('#mesSmModal .modal-content').load('/mes/sections_controller/new_section/', {'course' : course}, function(data) {
+                
+                var obj = $('#mesSmModal .modal-content');
+
+                _obj.section_form_init(this);
+
+                $("#sectionForm").submit(function() {
+                    $(this).find('button[type="submit"]').button('loading');
+
+                    var year = $(obj).find('select[name="section[year]"]').val();
+                    var code = $(obj).find('select[name="section[section]"]').val();
+                    var limit = $(obj).find('input[name="section[limit]"]').val();
+                    var course = $(obj).find('input#course-id').val();
+
+                    $.post('/mes/sections_controller/save_section/', {'course' : course, 'year' : year, 'code' : code, 'limit' : limit}, function(data) {
+                        console.log(data);
+                        _obj.init_sections_listing();
+
+                        $('#save-section-button').button('reset');
+                        $('#mesSmModal').modal('hide');
+                    }, 'json');
+                });
+               
+            });
+
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+        });
+    }
+
     Courses.prototype.handle_edit_sections = function() 
     {
         $('body').on('click', '.mesEditSections', function(){

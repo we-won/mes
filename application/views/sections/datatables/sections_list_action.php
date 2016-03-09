@@ -1,1 +1,1 @@
-<a data-course="<?php echo $course_id; ?>" data-year="<?php echo $year; ?>" data-sem="<?php echo $semester; ?>" class="btn btn-xs btn-info mesEditCurriculum"><i class="fa fa-pencil" ></i> Edit Subjects</a>
+<a class="btn btn-xs btn-info mesEditCurriculum"><i class="fa fa-pencil" ></i> Edit</a>

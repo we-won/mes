@@ -1,1 +1,1 @@
-<a href="<?php echo base_url( 'courses/' . $id . '/edit'  ) ?>" class="btn btn-xs  btn-info"><i class="fa fa-pencil" ></i> Manage section</a>
+<a href="<?php echo base_url( 'sections/' . $id . '/manage'  ) ?>" data-course="<?php echo $id; ?>" class="btn btn-xs  btn-info"><i class="fa fa-pencil" ></i> Manage sections</a>

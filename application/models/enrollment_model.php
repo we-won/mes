@@ -36,8 +36,6 @@ class enrollment_model extends CI_Model
 	
 	public function get_enrollment_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
-		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
-
 		$q = $this->db->query("
 			SELECT a.id, a.student_id, a.course_id, a.year, a.sy_id, a.added, a.status,
 			CONCAT(b.lastname, ', ', b.firstname) as student_name, b.number as student_number, c.title as course_title
@@ -45,7 +43,7 @@ class enrollment_model extends CI_Model
 			LEFT JOIN mes_students b ON a.student_id = b.id
 			LEFT JOIN mes_courses c ON a.course_id = c.id
 			WHERE b.lastname LIKE '%$search%'
-			AND a.sy_id = $sy_id
+			AND a.sy_id = ". $where['sy_id'] ."
 			LIMIT $start, $limit
 		");
 		
@@ -59,7 +57,7 @@ class enrollment_model extends CI_Model
 
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_enrollment
-			WHERE sy_id = $sy_id
+			WHERE sy_id = ". $where['sy_id'] ."
 		");
 		
 		$return = $q->row_array()['count'];

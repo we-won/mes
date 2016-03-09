@@ -7,10 +7,6 @@
 	</div>
 	<div class="portlet-body form">
 		<br>
-		<div class="col-sm-12">
-			<?php echo $this->nativesession->flashdata( '_courses' ); ?>
-			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-		</div>
 
 		<form id="frmcourse" role="form" class="form-horizontal" method="post" action="" data-base="<?php echo base_url( $this->uri->segment(2) .'/'. $this->uri->segment(3) ) ?>" enctype="multipart/form-data">
 			<div class="form-body">
@@ -25,7 +21,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Code</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[code]" value="<?php echo isset($course) ? $course['code'] : ''; ?>">
+									<input type="text" class="form-control" disabled value="<?php echo isset($course) ? $course['code'] : ''; ?>">
 								</div>
 							</div>
 						</div>
@@ -34,7 +30,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Title</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[title]" value="<?php echo isset($course) ? $course['title'] : ''; ?>"> 
+									<input type="text" class="form-control" disabled value="<?php echo isset($course) ? $course['title'] : ''; ?>"> 
 								</div>
 							</div>
 						</div>
@@ -43,7 +39,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="">Description</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="course[description]" value="<?php echo isset($course) ? $course['description'] : ''; ?>"> 
+									<input type="text" class="form-control" disabled value="<?php echo isset($course) ? $course['description'] : ''; ?>"> 
 								</div>
 							</div>
 						</div>
@@ -62,18 +58,22 @@
 					<br/><br/>
 
 					<div class="col-sm-9">
-						<h4 class="form-section">Curriculum <a href="<?php echo base_url( 'courses/new' ) ?>" class="btn orange">View Full Curriculum  <i class="fa fa-file-text"></i></a>
-							
-						</h4>
+						<h4 class="form-section">Sections</h4>
 
 						<div class="col-sm-12">
-							<table class="table table-striped table-bordered table-advance table-hover" id="tbl_curriculum" data-source="<?php echo base_url( 'courses_controller/curriculum_listing/' . (isset($course) ? $course['id'] : '0')) ?>"> 
+							<div class="table-toolbar">
+								<div class="btn-group">
+									<button type="button" class="btn btn-warning" id="new-section" data-course="<?php echo isset($course) ? $course['id'] : ''; ?>">Add New <i class="fa fa-plus"></i></button>
+								</div>
+							</div>
+							<table class="table table-striped table-bordered table-advance table-hover" id="tbl_sections" data-source="<?php echo base_url( 'sections_controller/sections_listing/' . (isset($course) ? $course['id'] : '0')) ?>"> 
 								<thead>
 									<tr>
+										<th>Section</th>
 										<th>Year</th>
-										<th>Semester</th>
-										<th>Subjects</th>
-										<th>Total Units</th>
+										<th>Code</th>
+										<th>Students</th>
+										<th>Limit</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -91,8 +91,7 @@
 
 			<div class="form-actions">
 				<div class="pull-right">
-					<button type="button" class="btn default" onclick="window.location.href='<?php echo base_url( $this->uri->segment(1) ) ?>'">Cancel</button>
-					<button type="submit" class="btn red">Submit</button>
+					<button type="button" class="btn default" onclick="window.location.href='<?php echo base_url( $this->uri->segment(1) ) ?>'">Back</button>
 				</div>
 				
 			</div>

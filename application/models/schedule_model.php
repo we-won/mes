@@ -48,8 +48,6 @@ class schedule_model extends CI_Model
 	
 	public function get_schedule_list( $start = 0, $limit = 10, $search = null, $where = null )
 	{
-		$sy_id = $this->schoolyear_model->get_active_sy()['id'];
-		
 		$q = $this->db->query("
 			SELECT a.id, b.title as subject_name, b.description as subject_description, 
 			GROUP_CONCAT(d.code1, '(', c.start_time, ' - ', c.end_time, ')' ORDER BY c.day SEPARATOR ', ') as schedule 
@@ -59,7 +57,7 @@ class schedule_model extends CI_Model
 			LEFT JOIN mes_days d ON d.id = c.day
 			AND a.is_active <> 0 
 			WHERE b.title LIKE '%$search%'
-			AND a.schoolyear_id = $sy_id 
+			AND a.schoolyear_id = ". $where['sy_id'] ."
 			GROUP BY a.id 
 			LIMIT $start, $limit
 		");
@@ -73,6 +71,7 @@ class schedule_model extends CI_Model
 		$q = $this->db->query("
 			SELECT count(*) as count FROM $this->mes_schedule
 			WHERE is_active <> 0
+			AND schoolyear_id = ". $where['sy_id'] ."
 		");
 		
 		$return = $q->row_array()['count'];

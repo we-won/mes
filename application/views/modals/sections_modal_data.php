@@ -33,7 +33,7 @@
                       <div class="col-sm-10">
                         <select class="form-control" name="section[year]">
                             <?php for ($i = 1; $i <= 5; ++$i) : ?>
-                              <option <?php echo (isset($enrollment) && $enrollment['year'] == $i) ? 'selected' : ''; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                              <option <?php echo (isset($section) && $section['year'] == $i) ? 'selected' : ''; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
                             <?php endfor; ?>
                         </select>
                       </div>
@@ -46,7 +46,7 @@
                       <div class="col-sm-10">
                         <select class="form-control" name="section[section]">
                             <?php for ($i = 65; $i <= 90; ++$i) : ?>
-                              <option <?php echo (isset($enrollment) && $enrollment['year'] == $i) ? 'selected' : ''; ?> value="<?php echo chr($i); ?>"><?php echo chr($i); ?></option>
+                              <option <?php echo (isset($section) && $section['year'] == $i) ? 'selected' : ''; ?> value="<?php echo chr($i); ?>"><?php echo chr($i); ?></option>
                             <?php endfor; ?>
                         </select>
                       </div>
@@ -66,9 +66,13 @@
                     <div class="form-group">
                       <label class="control-label col-sm-2" for="">Section</label>
                       <div class="col-sm-10">
+                        <?php if (isset($course)) : ?>
                         <input type="hidden" id="course-id" value="<?php echo $course['id']; ?>" />
                         <input type="hidden" id="course-title" value="<?php echo $course['title']; ?>" />
                         <input type="text" id="section-name" disabled class="form-control" />
+                        <?php elseif (isset($section)) : ?>
+                          
+                        <?php endif; ?>
                       </div>
                     </div>
                   </div>

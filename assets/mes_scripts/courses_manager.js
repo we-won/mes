@@ -411,16 +411,14 @@ var Courses = (function()
 
     Courses.prototype.handle_edit_sections = function() 
     {
-        $('body').on('click', '.mesEditSections', function(){
+        $('body').on('click', '.mesEditSection', function(){
 
-            var course = $(this).attr('data-course');
-            var year = $(this).attr('data-year');
-            var sem = $(this).attr('data-sem');
+            var id = $(this).attr('data-id');
             
             $('#sectionsEditForm').html('loading...');
 
             $('#mesSmModal').modal({backdrop: 'static'});
-            $('#mesSmModal .modal-content').load('/mes/courses_controller/edit_section/', {'course' : course, 'year' : year, 'sem' : sem}, function(data) {
+            $('#mesSmModal .modal-content').load('/mes/courses_controller/edit_section/', {'id' : id}, function(data) {
                 
                 $("#sectionEditForm").submit(function() {
 

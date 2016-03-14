@@ -1,1 +1,1 @@
-<a class="btn btn-xs btn-info mesEditCurriculum"><i class="fa fa-pencil" ></i> Edit</a>
+<a class="btn btn-xs btn-info mesEditSection" data-id="<?php echo $id; ?>"><i class="fa fa-pencil" ></i> Edit</a>

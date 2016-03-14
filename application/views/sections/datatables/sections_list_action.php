@@ -1,1 +1,2 @@
 <a class="btn btn-xs btn-info mesEditSection" data-id="<?php echo $id; ?>"><i class="fa fa-pencil" ></i> Edit</a>
+<a href="javascript:void(0);" class="btn btn-xs btn-danger  btn-removable" data-id="<?php echo $id ?>" data-message="Are you sure you want to remove this section? <br/> All students assigned to this section will be unassigned." data-url="<?php echo base_url( 'sections/' . $id . '/delete' ) ?>"><i class="fa fa-times" ></i> Del</a>

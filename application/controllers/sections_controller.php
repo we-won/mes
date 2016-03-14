@@ -133,21 +133,28 @@ class sections_controller extends CI_Controller {
 
 	public function edit_section()
 	{
-		if (!(isset($_POST['year'])) || !(isset($_POST['sem'])) || !(isset($_POST['course']))) return false;
+		if (!(isset($_POST['section']))) return false;
 
-		$course = $_POST['course'];
-		$year = $_POST['year'];
-		$sem = $_POST['sem'];
+		$data = [
+			'title' => 'New Section',
+			'section' => $this->sections_model->get_section($_POST['section'])
+		];
 
-		$data['year'] = $year;
-		$data['sem'] = $sem;
-
-		$data['section'] = $this->sections_model->get_section($id);
-
-		echo $this->load->view('modals/curriculum_edit_modal_data', compact('data'), TRUE);
+		echo $this->load->view('modals/sections_modal_data', compact('data'), TRUE);
 	}
 
 	public function delete_section($id = 0)
 	{
+		if( $id > 0 )
+		{
+			$this->sections_model->delete_section( $id );
+			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-success">User has been removed.</div>' );	
+		}
+		else
+		{
+			$this->nativesession->set_flashdata( '_users', '<div class="alert alert-danger">Cannot remove record.</div>' );	
+		}
+		
+		redirect(base_url( $this->uri->segment()));
 	}
 }

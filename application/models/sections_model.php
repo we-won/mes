@@ -22,8 +22,11 @@ class sections_model extends CI_Model
 		if ($id == 0) return false;
 
 		$q = $this->db->query("
-			SELECT * FROM $this->mes_sections
-			WHERE id = $id
+			SELECT a.id, a.sy_id, a.course_id, a.year, a.code, a.limit, a.is_active,
+			b.title, b.description, CONCAT (b.title, a.year, a.code) as section
+			FROM $this->mes_sections a
+			LEFT JOIN mes_courses b ON a.course_id = b.id
+			WHERE a.id = $id
 			LIMIT 1
 		");
 		

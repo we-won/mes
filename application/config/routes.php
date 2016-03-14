@@ -88,3 +88,4 @@ $route['enrollment/(:num)/reenroll'] = "enrollment_controller/reenroll/$1";
 
 $route['sections'] = "sections_controller";
 $route['sections/(:num)/manage'] = "sections_controller/manage_sections/$1";
+$route['sections/(:num)/delete'] = "sections_controller/delete_section/$1";

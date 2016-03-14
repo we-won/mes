@@ -393,7 +393,6 @@ var Courses = (function()
                     var course = $(obj).find('input#course-id').val();
 
                     $.post('/mes/sections_controller/save_section/', {'course' : course, 'year' : year, 'code' : code, 'limit' : limit}, function(data) {
-                        console.log(data);
                         _obj.init_sections_listing();
 
                         $('#save-section-button').button('reset');
@@ -418,20 +417,26 @@ var Courses = (function()
             $('#sectionsEditForm').html('loading...');
 
             $('#mesSmModal').modal({backdrop: 'static'});
-            $('#mesSmModal .modal-content').load('/mes/courses_controller/edit_section/', {'id' : id}, function(data) {
+            $('#mesSmModal .modal-content').load('/mes/sections_controller/edit_section/', {'section' : id}, function(data) {
                 
+                var obj = $('#mesSmModal .modal-content');
+
+                _obj.section_form_init(this);
+
                 $("#sectionEditForm").submit(function() {
+                    $(this).find('button[type="submit"]').button('loading');
 
-                    $('#save-section-button').button('loading');
+                    var year = $(obj).find('select[name="section[year]"]').val();
+                    var code = $(obj).find('select[name="section[section]"]').val();
+                    var limit = $(obj).find('input[name="section[limit]"]').val();
+                    var course = $(obj).find('input#course-id').val();
                     
-                    $.post('/mes/courses_controller/save_section/', {'course' : course, 'year' : year, 'sem' : sem, 'subjects' : subjects}, function(data) {
-                       
-                        _obj.init_section_listing();
-                        $('#save-section-button').button('reset');
-                         $('#mesSmModal').modal('hide');
-                    });
+                    $.post('/mes/sections_controller/save_section/', {'course' : course, 'year' : year, 'code' : code, 'limit' : limit}, function(data) {
+                        _obj.init_sections_listing();
 
-                    return false;
+                        $('#save-section-button').button('reset');
+                        $('#mesSmModal').modal('hide');
+                    }, 'json');
                 });
             });
 

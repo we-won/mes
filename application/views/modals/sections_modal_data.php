@@ -1,11 +1,12 @@
 <?php 
-  $course = $data['course']; 
+  if (isset($data['course'])) $course = $data['course']; 
+  if (isset($data['section'])) $section = $data['section']; 
 ?>
 
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" data-original-title="Close" data-placement="top"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   
-  <h3 class="modal-title er-modal-title"><?php echo $data['title']; ?> [<?php echo $course['description']; ?>]</h3>
+  <h3 class="modal-title er-modal-title"><?php echo $data['title']; ?> [<?php echo isset($course) ? $course['description'] : $section['description']; ?>]</h3>
 
   <div class="clearfix"></div>
 </div>
@@ -71,7 +72,9 @@
                         <input type="hidden" id="course-title" value="<?php echo $course['title']; ?>" />
                         <input type="text" id="section-name" disabled class="form-control" />
                         <?php elseif (isset($section)) : ?>
-                          
+                        <input type="hidden" id="course-id" value="<?php echo $section['course_id']; ?>" />
+                        <input type="hidden" id="course-title" value="<?php echo $section['title']; ?>" />
+                        <input type="text" id="section-name" disabled class="form-control" value="<?php echo $section['section']; ?>"/> 
                         <?php endif; ?>
                       </div>
                     </div>
